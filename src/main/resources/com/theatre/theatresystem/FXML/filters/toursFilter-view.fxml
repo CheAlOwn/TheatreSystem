@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+<AnchorPane fx:id="toursFilter" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatresystem.controllers.filters.ToursFilterController"
+            prefHeight="700" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
+    <Button fx:id="closeMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            maxWidth="40" layoutX="282" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../../icons/x.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Label text="Фильтры" styleClass="header2" layoutY="24" layoutX="115"/>
+
+    <Button fx:id="clearFiltersButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            maxWidth="40" layoutX="12" layoutY="20" id="clearFiltersButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../../icons/red-trash.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <VBox layoutY="88" layoutX="20" spacing="28">
+        <VBox spacing="16">
+            <Label text="Дата начала гастролей" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Дата окончания гастролей" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+
+    </VBox>
+
+</AnchorPane>

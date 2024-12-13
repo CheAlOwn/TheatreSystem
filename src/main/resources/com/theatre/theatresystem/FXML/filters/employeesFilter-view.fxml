@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane fx:id="employeesFilter" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatresystem.controllers.filters.EmployeesFilterController"
+            prefHeight="700" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
+    <Button fx:id="closeMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            maxWidth="40" layoutX="282" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../../icons/x.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Label text="Фильтры" styleClass="header2" layoutY="24" layoutX="115"/>
+
+    <Button fx:id="clearFiltersButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            maxWidth="40" layoutX="12" layoutY="20" id="clearFiltersButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../../icons/red-trash.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <ScrollPane maxWidth="298" maxHeight="580" layoutY="88" layoutX="20" fx:id="mainScrollPane">
+        <VBox spacing="28">
+            <VBox spacing="16">
+                <Label text="Категория работников" styleClass="text1"/>
+
+                <ScrollPane fx:id="chipsScrollPane" minWidth="294" minHeight="34" prefHeight="34" prefWidth="294"
+                            maxHeight="34" maxWidth="294">
+                    <HBox spacing="14">
+                        <FlowPane fx:id="actorChips" alignment="CENTER" styleClass="chips" minWidth="64" minHeight="32"
+                                  maxHeight="32" maxWidth="64" prefHeight="32" prefWidth="64">
+                            <Label text="Актер" styleClass="mainText" alignment="CENTER"/>
+                        </FlowPane>
+                        <FlowPane fx:id="musicianChips" alignment="CENTER" styleClass="chips" minWidth="93"
+                                  minHeight="32"
+                                  maxHeight="32" maxWidth="93" prefHeight="32" prefWidth="93">
+                            <Label text="Музыкант" styleClass="mainText" alignment="CENTER"/>
+                        </FlowPane>
+                        <FlowPane fx:id="directorChips" alignment="CENTER" styleClass="chips" minWidth="118"
+                                  minHeight="32"
+                                  maxHeight="32" maxWidth="118" prefHeight="32" prefWidth="118">
+                            <Label text="Постановщик" styleClass="mainText" alignment="CENTER"/>
+                        </FlowPane>
+                        <FlowPane fx:id="staffChips" alignment="CENTER" styleClass="chips" minWidth="96" minHeight="32"
+                                  maxHeight="32" maxWidth="96" prefHeight="32" prefWidth="96">
+                            <Label text="Служащий" styleClass="mainText" alignment="CENTER"/>
+                        </FlowPane>
+                    </HBox>
+                </ScrollPane>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Стаж работы" styleClass="text1"/>
+                <HBox spacing="20">
+                    <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                        <TextField promptText="От 0" styleClass="filterTextField" minWidth="52" prefWidth="52"
+                                   maxWidth="52"/>
+                    </Pane>
+                    <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                        <TextField promptText="До 60" styleClass="filterTextField" minWidth="52" prefWidth="52"
+                                   maxWidth="52"/>
+                    </Pane>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Пол" styleClass="text1"/>
+                <HBox spacing="20">
+                    <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                              hgap="8">
+                        <RadioButton fx:id="allRadioButton" />
+                        <Label text="Все" styleClass="genderRadioText" alignment="CENTER"/>
+                    </FlowPane>
+
+                    <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                              hgap="8">
+                        <RadioButton fx:id="femaleRadioButton" />
+                        <Label text="Женщина" styleClass="genderRadioText" alignment="CENTER"/>
+                    </FlowPane>
+
+                    <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                              hgap="8">
+                        <RadioButton fx:id="maleRadioButton" />
+                        <Label text="Мужчина" styleClass="genderRadioText" alignment="CENTER"/>
+                    </FlowPane>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Год рождения" styleClass="text1"/>
+                <HBox spacing="20">
+                    <Pane styleClass="filterTextFieldPane" minWidth="73" prefWidth="73" maxWidth="73">
+                        <TextField promptText="От 1979" styleClass="filterTextField" minWidth="69" prefWidth="69"
+                                   maxWidth="69"/>
+                    </Pane>
+                    <Pane styleClass="filterTextFieldPane" minWidth="73" prefWidth="73" maxWidth="73">
+                        <TextField promptText="До 2007" styleClass="filterTextField" minWidth="69" prefWidth="69"
+                                   maxWidth="69"/>
+                    </Pane>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Возраст" styleClass="text1"/>
+                <HBox spacing="20">
+                    <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                        <TextField promptText="От 17" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                                   maxWidth="60"/>
+                    </Pane>
+                    <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                        <TextField promptText="До 100" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                                   maxWidth="60"/>
+                    </Pane>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Количество детей" styleClass="text1"/>
+                <HBox spacing="20">
+                    <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                        <TextField promptText="От 0" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                                   maxWidth="60"/>
+                    </Pane>
+                    <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                        <TextField promptText="До 100" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                                   maxWidth="60"/>
+                    </Pane>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <Label text="Заработная плата" styleClass="text1"/>
+                <HBox spacing="20">
+                    <Pane styleClass="filterTextFieldPane" minWidth="96" prefWidth="96" maxWidth="96">
+                        <TextField promptText="От 5999₽" styleClass="filterTextField" minWidth="92" prefWidth="92"
+                                   maxWidth="92"/>
+                    </Pane>
+                    <Pane styleClass="filterTextFieldPane" minWidth="96" prefWidth="96" maxWidth="96">
+                        <TextField promptText="До 999999₽" styleClass="filterTextField" minWidth="92" prefWidth="92"
+                                   maxWidth="92"/>
+                    </Pane>
+                </HBox>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+
+</AnchorPane>
