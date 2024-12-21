@@ -51,7 +51,7 @@
         </graphic>
     </Button>
 
-    <Button fx:id="filterButton" onAction="#openFilters" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+    <Button fx:id="filterButton" onAction="#openFilter" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
             maxHeight="40"
             maxWidth="40" layoutX="944"
             layoutY="20" id="filterButton" styleClass="navButtons">

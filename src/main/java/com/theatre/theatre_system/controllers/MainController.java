@@ -24,9 +24,15 @@ import java.sql.*;
 import java.util.logging.Logger;
 
 public class MainController {
-    public Button closeFiltersButton;
-    public Button clearFiltersButton;
-    public AnchorPane fPane;
+    @FXML
+    private Button closeFiltersButton;
+
+    @FXML
+    private Button clearFiltersButton;
+
+    @FXML
+    private AnchorPane fPane;
+
     @FXML
     private HBox searchBox;
 
@@ -114,8 +120,6 @@ public class MainController {
     @FXML
     private Pane floatPane;
 
-    private boolean isMenuOpen = false;
-    private boolean isFiltersOpen = false;
     private final Connection connection = MainRecord.connection;
     private Statement statement;
     private String query;
@@ -181,13 +185,12 @@ public class MainController {
         addRecordPane.setEffect(dropShadow);
     }
 
-    @FXML
-    private void openMenu(ActionEvent actionEvent) {
-        menuPane.setVisible(true);
+    private void setOpen(Pane pane, int ...shearValue) {
+        if (!pane.isVisible()) {
+            pane.setVisible(true);
 
-        if (!isMenuOpen) {
             // Анимация выезда меню
-            TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), menuPane);
+            TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), pane);
             slideIn.setToX(0); // Переместить меню на видимую область
 
             // Анимация затемнения фона
@@ -199,19 +202,12 @@ public class MainController {
             // Запуск анимации
             slideIn.play();
             fadeIn.play();
+        } else {
+            pane.setVisible(false);
 
-            isMenuOpen = true;
-        }
-    }
-
-    @FXML
-    private void closeMenu() {
-        menuPane.setVisible(false);
-
-        if (isMenuOpen) {
             // Анимация скрытия меню
-            TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), menuPane);
-            slideOut.setToX(-278); // Вернуть меню за пределы окна
+            TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), pane);
+            slideOut.setToX(shearValue[0]); // Вернуть меню за пределы окна
 
             // Анимация скрытия затемнения
             FadeTransition fadeOut = new FadeTransition(Duration.millis(300), overlayPane);
@@ -222,9 +218,17 @@ public class MainController {
             // Запуск анимации
             slideOut.play();
             fadeOut.play();
-
-            isMenuOpen = false;
         }
+    }
+
+    @FXML
+    private void openMenu(ActionEvent actionEvent) {
+        setOpen(menuPane);
+    }
+
+    @FXML
+    private void closeMenu(ActionEvent actionEvent) {
+        setOpen(menuPane, -278);
     }
 
     private ResultSet getData(String table) throws SQLException {
@@ -285,8 +289,6 @@ public class MainController {
         currentHyperlink.setDisable(true); // выключаем ее
         tableName.setText(currentHyperlink.getText()); // устанавливаем правильное название таблицы на главной странице
         setColumns(getData(table)); // Заполняем таблицу колонками
-
-        closeMenu();
     }
 
     @FXML
@@ -390,7 +392,7 @@ public class MainController {
         hideAnimation.play();
     }
 
-    //TODO: доделать
+    // TODO: доделать
     @FXML
     private void toggleSearch(ActionEvent actionEvent) {
         if (isSearchVisible) {
@@ -410,26 +412,8 @@ public class MainController {
     }
 
     @FXML
-    private void openFilters(ActionEvent actionEvent) throws IOException, NullPointerException {
-        filtersPane.setVisible(true);
-
-        if (!isFiltersOpen) {
-            // Анимация выезда меню
-            TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), filtersPane);
-            slideIn.setToX(0); // Переместить меню на видимую область
-
-            // Анимация затемнения фона
-            overlayPane.setVisible(true); // Показываем затемнение
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), overlayPane);
-            fadeIn.setFromValue(0); // Полностью прозрачный
-            fadeIn.setToValue(1); // Полностью непрозрачный
-
-            // Запуск анимации
-            slideIn.play();
-            fadeIn.play();
-
-            isFiltersOpen = true;
-        }
+    private void openFilter(ActionEvent actionEvent) throws IOException, NullPointerException {
+        setOpen(filtersPane);
 
         switch (currentHyperlink.getText()) {
             case "Актеры" -> loadSceneFilter(fPane, "../FXML/filters/actorsFilter-view.fxml");
@@ -445,24 +429,6 @@ public class MainController {
 
     @FXML
     private void closeFilter(ActionEvent actionEvent) {
-        filtersPane.setVisible(false);
-
-        if (isFiltersOpen) {
-            // Анимация скрытия меню
-            TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), filtersPane);
-            slideOut.setToX(334); // Вернуть меню за пределы окна
-
-            // Анимация скрытия затемнения
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), overlayPane);
-            fadeOut.setFromValue(1); // Полностью непрозрачный
-            fadeOut.setToValue(0); // Полностью прозрачный
-            fadeOut.setOnFinished(event -> overlayPane.setVisible(false)); // Скрыть затемнение после анимации
-
-            // Запуск анимации
-            slideOut.play();
-            fadeOut.play();
-
-            isFiltersOpen = false;
-        }
+        setOpen(filtersPane, 334);
     }
 }
