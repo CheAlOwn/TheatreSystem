@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.Pane?>
+<AnchorPane prefHeight="700" prefWidth="1000" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.theatre.theatre_system.controllers.MainController" stylesheets="@../CSS/mainStyle.css"
+            fx:id="mainPane"
+            id="mainFrame">
+
+
+    <FlowPane minHeight="80" minWidth="1000" prefHeight="80" prefWidth="1000" maxWidth="1000" maxHeight="80"
+              alignment="CENTER">
+        <Label fx:id="tableName" text="Название таблицы" textAlignment="CENTER" styleClass="header2"/>
+    </FlowPane>
+
+    <Button fx:id="menuButton" onAction="#openMenu" minWidth="44" minHeight="40" prefWidth="44" prefHeight="40"
+            maxHeight="44" maxWidth="40"
+            layoutX="12"
+            layoutY="20" id="menuButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../icons/menu.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="searchButton" onAction="#toggleSearch" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+            maxHeight="40"
+            maxWidth="40" layoutX="888"
+            layoutY="20" id="searchButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../icons/search.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Button fx:id="filterButton" onAction="#openFilters" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+            maxHeight="40"
+            maxWidth="40" layoutX="944"
+            layoutY="20" id="filterButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../icons/filter.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <AnchorPane prefHeight="585" prefWidth="960" layoutY="94" layoutX="20">
+        <TableView fx:id="tableOutData" minWidth="960" minHeight="585" prefWidth="960" prefHeight="585" maxWidth="960"
+                   maxHeight="585"/>
+    </AnchorPane>
+
+    <!--    ПАНЕЛЬ ДЕЙСТВИЙ С ТАБЛИЦАМИ     -->
+
+    <FlowPane fx:id="addRecordPane" id="actionsPane" minWidth="78" minHeight="78" maxHeight="78" maxWidth="78"
+              prefHeight="78" prefWidth="78" layoutX="900" layoutY="600" alignment="CENTER">
+        <Button fx:id="addObjectButton" onAction="#addNewRecord" styleClass="actionTableButtons" minHeight="40"
+                minWidth="40" prefWidth="40"
+                prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
+            <graphic>
+                <ImageView>
+                    <Image url="@../icons/plus-circle.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </FlowPane>
+
+    <FlowPane fx:id="actionsPane" visible="false" id="actionsPane" minWidth="70" minHeight="140" maxHeight="140"
+              maxWidth="70"
+              prefHeight="140" prefWidth="70" layoutX="900" layoutY="530" alignment="CENTER" vgap="8">
+        <Button fx:id="editObjectButton" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+                prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
+            <graphic>
+                <ImageView>
+                    <Image url="@../icons/edit.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="removeObjectButton" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+                prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
+            <graphic>
+                <ImageView>
+                    <Image url="@../icons/trash-2.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </FlowPane>
+
+    <!--    СТРОКА ПОИСКА   -->
+    <HBox visible="false" fx:id="searchBox" spacing="12" layoutY="22" layoutX="227">
+        <ComboBox fx:id="parametersBox" promptText="Параметр" minWidth="136" maxWidth="136" maxHeight="36"
+                  minHeight="36"/>
+        <TextField fx:id="searchTextField" styleClass="formsTextField" promptText="Поиск" minWidth="340" maxWidth="340"
+                   maxHeight="36" minHeight="36"/>
+    </HBox>
+
+
+    <!--    ПАНЕЛЬ МЕНЮ      -->
+
+
+    <Rectangle fx:id="overlayPane" visible="false" style="-fx-fill: rgba(0, 0, 0, 0.5);" width="1000" height="700"/>
+
+    <AnchorPane fx:id="menuPane" visible="false" id="menuPane" maxWidth="278" maxHeight="700" minHeight="700"
+                minWidth="278"
+                prefHeight="700" prefWidth="278"
+                style="-fx-background-color: #fff; -fx-background-radius: 0px 24px 24px 0px;">
+        <Button fx:id="closeMenuButton" onAction="#closeMenu" minWidth="40" minHeight="40" prefWidth="40"
+                prefHeight="40" maxHeight="40"
+                maxWidth="40" layoutX="12" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../icons/x.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Label text="Меню" styleClass="header2" layoutY="26" layoutX="105"/>
+
+        <VBox fx:id="menuVBox" layoutY="84" layoutX="20" spacing="14">
+            <Hyperlink text="Актеры" styleClass="menuText" fx:id="actorsHyperlink" onAction="#getActorsTable"/>
+            <Hyperlink text="Работники" styleClass="menuText" fx:id="employeesHyperlink" onAction="#getEmployeesTable"/>
+            <Hyperlink text="Музыканты" styleClass="menuText" fx:id="musiciansHyperlink" onAction="#getMusiciansTable"/>
+            <Hyperlink text="Спектакли" styleClass="menuText" fx:id="performancesHyperlink"
+                       onAction="#getPerformancesTable"/>
+            <Hyperlink text="Репертуары" styleClass="menuText" fx:id="repertoireHyperlink"
+                       onAction="#getRepertoiresTable"/>
+            <Hyperlink text="Роли" styleClass="menuText" fx:id="roleHyperlink" onAction="#getRolesTable"/>
+            <Hyperlink text="Билеты" styleClass="menuText" fx:id="ticketsHyperlink" onAction="#getTicketsTable"/>
+            <Hyperlink text="Гастроли" styleClass="menuText" fx:id="toursHyperlink" onAction="#getToursTable"/>
+        </VBox>
+    </AnchorPane>
+
+
+    <!--    ФИЛЬТРЫ     -->
+
+    <AnchorPane fx:id="filtersPane" id="filtersPane" visible="false" maxWidth="334"
+                maxHeight="700" minHeight="700" minWidth="334"
+                prefHeight="700" prefWidth="334"
+                style="-fx-background-color: #fff; -fx-background-radius: 24px 0px 0px 24px;" layoutX="666">
+        <Pane minWidth="334" maxWidth="334" maxHeight="80" minHeight="80">
+            <Button fx:id="closeFiltersButton" onAction="#closeFilter" minWidth="40" minHeight="40" prefWidth="40"
+                    prefHeight="40" maxHeight="40"
+                    maxWidth="40" layoutX="282" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../icons/x.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Label text="Фильтры" styleClass="header2" layoutY="24" layoutX="115"/>
+
+            <Button fx:id="clearFiltersButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+                    maxHeight="40"
+                    maxWidth="40" layoutX="12" layoutY="20" id="clearFiltersButton" styleClass="navButtons">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../icons/red-trash.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </Pane>
+        <AnchorPane fx:id="fPane" maxHeight="620" minHeight="620" prefHeight="620" maxWidth="334" minWidth="334"
+                    prefWidth="334" layoutY="80"/>
+    </AnchorPane>
+
+    <!--    ФОРМЫ       -->
+
+    <AnchorPane fx:id="formsPane" id="formsPane" visible="false" maxWidth="344"
+                maxHeight="428" minHeight="428" minWidth="344"
+                prefHeight="428" prefWidth="344"
+                style="-fx-background-color: #fff; -fx-background-radius: 24px;" layoutX="328" layoutY="136">
+
+    </AnchorPane>
+</AnchorPane>

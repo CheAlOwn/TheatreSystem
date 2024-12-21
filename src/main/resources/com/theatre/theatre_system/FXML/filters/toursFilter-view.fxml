@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="toursFilter" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.filters.ToursFilterController"
+            prefHeight="620" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
+
+    <VBox layoutX="20" spacing="28">
+        <VBox spacing="16">
+            <Label text="Дата начала гастролей" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Дата окончания гастролей" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+
+    </VBox>
+
+</AnchorPane>

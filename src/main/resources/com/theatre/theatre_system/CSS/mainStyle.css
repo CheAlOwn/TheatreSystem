@@ -1,0 +1,276 @@
+@font-face {
+    font-family: "Roboto Medium";
+    src: url("../fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Roboto Regular";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+.label {
+    -fx-text-fill: #242424;
+}
+
+#mainFrame {
+    /* -fx-background-color: #f6f6f6; */
+    -fx-background-color: #fff;
+
+}
+
+.header2 {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 24px;
+}
+
+.navButtons, .actionTableButtons {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px;
+}
+
+/* ЗДЕСЬ НУЖНО ЛИБО ДОБАВТЬЬ .actionTableButtons 
+ЧТОБЫ ФОН БЫЛ ПРИ НАВЕДЕНИИ ЛИБО НЕ ДОБАВЛЯТТ ВАЩЕ */
+
+.navButtons:hover {
+    -fx-background-color: #eee;
+}
+
+/* ЗДЕСЬ НУЖНО ЛИБО ДОБАВТЬЬ .actionTableButtons 
+ЧТОБЫ ФОН БЫЛ ПРИ НАЖАТИИ ЛИБО НЕ ДОБАВЛЯТТ ВАЩЕ */
+
+.navButtons:pressed {
+    -fx-background-color: #e4e4e4;
+}
+
+#actionsPane{
+    -fx-background-color: #fff;
+    -fx-background-radius: 24px;
+}
+
+.hyperlink {
+    -fx-padding: 0;             /* Убираем отступы */
+    -fx-background-color: none; /* Убираем фон */
+    -fx-focus-color: transparent;       /* Убираем цвет фокуса */
+    -fx-faint-focus-color: transparent; /* Убираем слабую подсветку фокуса */
+    -fx-underline: false; /* Убираем подчеркивание */
+}
+
+.hyperlink:hover{
+    -fx-opacity:1;
+}
+
+.menuText {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 20px;
+    -fx-line-spacing: 24px;
+    -fx-text-fill: #242424;
+    -fx-opacity: 0.35;
+}
+
+
+/* FILTERS */
+
+.mainText {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+}
+
+.scroll-pane {
+    -fx-hbar-policy: NEVER; 
+    -fx-vbar-policy: NEVER;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: #ffffff; /* Цвет фона для области просмотра */
+}
+
+.text1{
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 16px;
+    -fx-font-fill: #242424;    
+}
+
+
+
+.chips {
+    -fx-border-color: #CACFD6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 24px;
+}
+
+
+.filterTextFieldPane {
+    -fx-border-width:0px 0px 1px 0px;
+    -fx-border-color: #CACFD6;
+}
+
+.filterTextField {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0px 4px 4px 4px;
+    -fx-font-fill: #242424;
+}
+
+.radio-button .radio {
+    -fx-background-color: none;
+    -fx-border-color: #D9D9D9;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 24px;
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #D9D9D9;
+    -fx-background-insets: 0;
+}
+
+.check-box .box {
+    -fx-background-color: #D9D9D9; /* Убираем фон галочки */
+}
+
+
+
+
+
+/* ФОРМЫ */
+.formsTextField {
+    -fx-background-color: #E9E6F6;
+    -fx-background-radius: 24px;
+    -fx-padding: 10px 14px;
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+    -fx-font-fill: #242424;
+}
+
+.textForms {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+    -fx-font-fill: #242424;
+    -fx-padding: 0px 0px 0px 7px;
+}
+
+.combo-box {
+    -fx-background-color: #E9E6F6;
+    -fx-padding: 0px 7px 0px 7px;
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+    -fx-font-fill: #242424;
+    -fx-background-radius: 24px;
+}
+
+.actionHyperlinks {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 16px;
+    -fx-line-spacing: 20px;
+    -fx-text-fill: #69735E;
+    /* -fx-opacity: 0.5; */
+}
+
+#specialText {
+    -fx-padding: 0px;
+}
+
+#loginButton {
+    -fx-background-color: #A4B494;
+    -fx-background-radius: 24px;
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 16px;
+    -fx-font-fill: #242424;
+}
+
+#loginButton:hover {
+    -fx-background-color: #97a787;
+}
+
+#loginButton:pressed {
+    -fx-background-color: #8c9b7e;
+}
+
+
+/* СТИЛИ ТАБЛИЦ */
+
+.table-view .column-header-background,
+.table-view .column-header-background .filler,
+.table-view .corner {
+    /* -fx-min-height: 32px; */
+	-fx-background-color: #e5e5eb;
+    -fx-background-radius: 12px;
+}
+
+.table-view .column-header {
+    -fx-border-color: #dcdce2;
+	-fx-background-color: #e5e5eb;
+    -fx-padding: 12px;
+    -fx-pref-height: 36px;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 14px;
+	-fx-alignment: center-left;
+}
+
+.table-view {
+	-fx-border-color: transparent;
+	-fx-background-color: transparent; /* OR  -fx-background-insets: 0.0; */
+}
+
+.table-row-cell:filled {
+	-fx-background-color: transparent;
+	-fx-border-color: transparent #F9F9FB #F9F9FB #F9F9FB, transparent;
+	-fx-border-insets: 0, 1;
+}
+.table-row-cell:empty {
+	-fx-background-color: transparent;
+}
+.table-row-cell:filled:hover {
+	-fx-background-color: #d1d1d1;
+}
+.table-row-cell:filled:selected:hover {
+	-fx-background-color: #d1d1d1;
+}
+.table-row-cell:filled:selected {
+  	-fx-background-color: #eaeaea;
+ 	-fx-background-insets: 0.0;
+	-fx-background-radius: 0.0;
+}
+.table-row-cell:filled:selected .table-cell {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-sizw: 14px;
+	-fx-text-fill: #242424;
+}
+.table-view .cell:filled {
+	-fx-alignment: center-left;
+}
+
+
+
+/* Уменьшаем толщину и делаем фон дорожки менее заметным */
+.table-view .scroll-bar:vertical .track,
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #e9e9e9;
+    -fx-background-radius: 5px; 
+}
+
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 5px; 
+}
+
+.table-view .scroll-bar:vertical .thumb:hover,
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3); 
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-pref-width: 10px;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-pref-height: 10px;
+}

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="actorsFilter" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.filters.ActorsFilterController"
+            prefHeight="620" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
+
+    <VBox layoutX="20" spacing="28">
+        <VBox spacing="16">
+            <Label text="Тембр голоса" styleClass="text1"/>
+            <VBox spacing="12">
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="contraltoCheckBox"/>
+                    <Label text="Контральто" styleClass="mainText"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="mezzoSopranoCheckBox"/>
+                    <Label text="Меццо-сопрано" styleClass="mainText"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="sopranoCheckBox"/>
+                    <Label text="Сопрано" styleClass="mainText"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="bassCheckBox"/>
+                    <Label text="Бас" styleClass="mainText"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="baritoneCheckBox"/>
+                    <Label text="Баритон" styleClass="mainText"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <CheckBox fx:id="tenorCheckBox"/>
+                    <Label text="Тенор" styleClass="mainText"/>
+                </FlowPane>
+            </VBox>
+        </VBox>
+
+
+        <VBox spacing="16">
+            <Label text="Пол" styleClass="text1"/>
+            <HBox spacing="20">
+                <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="allRadioButton"/>
+                    <Label text="Все" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="femaleRadioButton"/>
+                    <Label text="Женщина" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="maleRadioButton"/>
+                    <Label text="Мужчина" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Возраст" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                    <TextField promptText="От 17" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                               maxWidth="60"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                    <TextField promptText="До 100" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                               maxWidth="60"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Рост, м" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                    <TextField promptText="От 1.54" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                               maxWidth="60"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="64" prefWidth="64" maxWidth="64">
+                    <TextField promptText="До 2.25" styleClass="filterTextField" minWidth="60" prefWidth="60"
+                               maxWidth="60"/>
+                </Pane>
+            </HBox>
+        </VBox>
+    </VBox>
+
+</AnchorPane>

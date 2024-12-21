@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.forms.TicketsFormController"
+            maxWidth="344"
+            maxHeight="428" minHeight="428" minWidth="344"
+            prefHeight="428" prefWidth="344"
+            style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../../CSS/mainStyle.css">
+
+    <Button fx:id="closeMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            maxWidth="40" layoutX="284" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+        <graphic>
+            <ImageView>
+                <Image url="@../../../icons/x.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <Label text="Форма" styleClass="header2" layoutY="23" layoutX="133"/>
+
+    <VBox spacing="20" layoutY="82" layoutX="30" maxWidth="284" minWidth="284">
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="ID репертуара" styleClass="textForms"/>
+            <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                <TextField fx:id="idRepertoire" promptText="10000" styleClass="filterTextField" minWidth="52" prefWidth="52"
+                           maxWidth="52"/>
+            </Pane>
+        </FlowPane>
+
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="Место" styleClass="textForms"/>
+            <Pane styleClass="filterTextFieldPane" minWidth="50" prefWidth="50" maxWidth="50">
+                <TextField fx:id="idSeat" promptText="AG20" styleClass="filterTextField" minWidth="46" prefWidth="46"
+                           maxWidth="46"/>
+            </Pane>
+        </FlowPane>
+
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="Цена билета" styleClass="textForms"/>
+            <HBox>
+                <Pane styleClass="filterTextFieldPane" minWidth="74" prefWidth="74" maxWidth="74">
+                    <TextField fx:id="price" promptText="99999.99" styleClass="filterTextField" minWidth="70" prefWidth="70"
+                               maxWidth="70"/>
+                </Pane>
+                <Label text="₽" styleClass="textForms"/>
+            </HBox>
+        </FlowPane>
+
+        <ComboBox fx:id="ticketSellStatus" promptText="Статус продажи" minWidth="284" maxWidth="284" maxHeight="36" minHeight="36"/>
+    </VBox>
+
+    <Hyperlink fx:id="addForRecordHyperlink" styleClass="actionHyperlinks" layoutX="239" layoutY="380" text="Добавить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="380" text="Изменить"/>
+
+</AnchorPane>

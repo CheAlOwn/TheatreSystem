@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="ticketsFilter" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.filters.TicketsFilterController"
+            prefHeight="620" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
+
+    <VBox layoutX="20" spacing="28">
+        <VBox spacing="16">
+            <Label text="Статус продажи" styleClass="text1"/>
+            <VBox spacing="12">
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="availableRadioButton"/>
+                    <Label text="Доступен" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="soldRadioButton"/>
+                    <Label text="Продан" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="reservedRadioButton"/>
+                    <Label text="Забронирован" styleClass="mainText" alignment="CENTER"/>
+                </FlowPane>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Цена билета" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="88" prefWidth="88" maxWidth="88">
+                    <TextField promptText="От 150₽" styleClass="filterTextField" minWidth="84" prefWidth="84"
+                               maxWidth="84"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="88" prefWidth="88" maxWidth="88">
+                    <TextField promptText="До 10000₽" styleClass="filterTextField" minWidth="84" prefWidth="84"
+                               maxWidth="84"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="16">
+            <Label text="Дата продажи" styleClass="text1"/>
+            <HBox spacing="20">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
+                </Pane>
+            </HBox>
+        </VBox>
+
+
+    </VBox>
+
+</AnchorPane>
