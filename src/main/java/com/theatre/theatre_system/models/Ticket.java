@@ -1,6 +1,6 @@
 package com.theatre.theatre_system.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Ticket {
     private int ticketId;
@@ -8,9 +8,9 @@ public class Ticket {
     private String seat;
     private float price;
     private String status;
-    private Date saleDate;
+    private LocalDate saleDate;
 
-    public Ticket(int repertoireId, String seat, float price, String status, Date saleDate) {
+    public Ticket(int repertoireId, String seat, float price, String status, LocalDate saleDate) {
         this.repertoireId = repertoireId;
         this.seat = seat;
         this.price = price;
@@ -18,7 +18,7 @@ public class Ticket {
         this.saleDate = saleDate;
     }
 
-    public Ticket(int ticketId, int repertoireId, String seat, float price, String status, Date saleDate) {
+    public Ticket(int ticketId, int repertoireId, String seat, float price, String status, LocalDate saleDate) {
         this.ticketId = ticketId;
         this.repertoireId = repertoireId;
         this.seat = seat;
@@ -73,11 +73,11 @@ public class Ticket {
         this.status = status;
     }
 
-    public Date getSaleDate() {
+    public LocalDate getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(LocalDate saleDate) {
         this.saleDate = saleDate;
     }
 }

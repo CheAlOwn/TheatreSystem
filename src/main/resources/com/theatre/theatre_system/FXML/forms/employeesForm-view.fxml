@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.collections.FXCollections?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.forms.EmployeeFormController"
+            maxWidth="344"
+            maxHeight="348" minHeight="348" minWidth="344"
+            prefHeight="348" prefWidth="344"
+            style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../CSS/mainStyle.css">
+
+
+    <AnchorPane style="-fx-background-color: #fff; -fx-background-radius: 24px;"
+                stylesheets="@../../CSS/mainStyle.css" fx:id="step1">
+        <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+            <TextField fx:id="lastName" styleClass="formsTextField" promptText="Фамилия" minWidth="284" maxWidth="284"
+                       maxHeight="36" minHeight="36"/>
+            <TextField fx:id="firstName" styleClass="formsTextField" promptText="Имя" minWidth="284" maxWidth="284"
+                       maxHeight="36" minHeight="36"/>
+            <TextField fx:id="middleName" styleClass="formsTextField" promptText="Отчество" minWidth="284"
+                       maxWidth="284" maxHeight="36" minHeight="36"/>
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="Дата рождения" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
+                    <TextField fx:id="birthday" promptText="01.01.1999" styleClass="filterTextField" minWidth="82"
+                               prefWidth="82"
+                               maxWidth="82"/>
+                </Pane>
+            </FlowPane>
+
+            <HBox spacing="24" styleClass="textForms">
+                <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="femaleRadioButton"/>
+                    <Label text="Женщина" styleClass="genderRadioText" alignment="CENTER"/>
+                </FlowPane>
+
+                <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
+                          hgap="8">
+                    <RadioButton fx:id="maleRadioButton"/>
+                    <Label text="Мужчина" styleClass="genderRadioText" alignment="CENTER"/>
+                </FlowPane>
+            </HBox>
+        </VBox>
+
+        <!--    <Button fx:id="nextMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"-->
+        <!--            maxWidth="40" layoutX="284" layoutY="20" id="nextMenuButton" styleClass="navButtons" text="Добавить">-->
+        <!--    </Button>-->
+
+        <Button fx:id="nextToStep2" onAction="#nextToStep2" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+                maxHeight="40"
+                maxWidth="40" layoutX="284" layoutY="288" id="nextMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-right.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </AnchorPane>
+
+
+    <!--    STEP 2-->
+
+    <AnchorPane style="-fx-background-color: #fff; -fx-background-radius: 24px;"
+                stylesheets="@../../CSS/mainStyle.css" visible="false" fx:id="step2">
+
+        <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+            <ComboBox fx:id="typeEmployeeBox" promptText="Тип работника" minWidth="284" maxWidth="284" maxHeight="36"
+                      minHeight="36">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Актер"/>
+                        <String fx:value="Музыкант"/>
+                        <String fx:value="Постановщик"/>
+                        <String fx:value="Служащий"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <TextField fx:id="postEmployee" styleClass="formsTextField" promptText="Должность" minWidth="284"
+                       maxWidth="284" maxHeight="36" minHeight="36"/>
+            <TextField fx:id="addressEmployee" styleClass="formsTextField" promptText="Адрес" minWidth="284"
+                       maxWidth="284" maxHeight="36" minHeight="36"/>
+            <TextField fx:id="phoneNumberEmployee" styleClass="formsTextField" promptText="Номер телефона"
+                       minWidth="284" maxWidth="284" maxHeight="36" minHeight="36"/>
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="Год поступления на работу" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="46" prefWidth="46" maxWidth="46">
+                    <TextField fx:id="hireDate" promptText="2006" styleClass="filterTextField" minWidth="42"
+                               prefWidth="42"
+                               maxWidth="42"/>
+                </Pane>
+            </FlowPane>
+        </VBox>
+
+        <!--    <Button fx:id="nextMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"-->
+        <!--            maxWidth="40" layoutX="284" layoutY="20" id="nextMenuButton" styleClass="navButtons" text="Добавить">-->
+        <!--    </Button>-->
+
+        <Button fx:id="nextToStep3" onAction="#nextToStep3" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+                maxHeight="40"
+                maxWidth="40" layoutX="284" layoutY="288" id="nextMenuButton" styleClass="navButtons" disable="true">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-right.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="backToStep1" onAction="#backToStep1" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+                maxHeight="40"
+                maxWidth="40" layoutX="20" layoutY="288" id="nextMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-left.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </AnchorPane>
+
+
+    <!--    STEP 3-->
+    <AnchorPane style="-fx-background-color: #fff; -fx-background-radius: 24px;"
+                stylesheets="@../../CSS/mainStyle.css" visible="false" fx:id="step3">
+
+        <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="Cтаж работы" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="38" prefWidth="38" maxWidth="38">
+                    <TextField fx:id="experience" promptText="100" styleClass="filterTextField" minWidth="34"
+                               prefWidth="34"
+                               maxWidth="34"/>
+                </Pane>
+            </FlowPane>
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="Заработная плата" styleClass="textForms"/>
+                <HBox>
+                    <Pane styleClass="filterTextFieldPane" minWidth="82" prefWidth="82" maxWidth="82">
+                        <TextField fx:id="salary" promptText="999999.99" styleClass="filterTextField" minWidth="78"
+                                   prefWidth="78"
+                                   maxWidth="78"/>
+                    </Pane>
+                    <Label text="₽" styleClass="textForms"/>
+                </HBox>
+            </FlowPane>
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="Количество детей" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="38" prefWidth="38" maxWidth="38">
+                    <TextField fx:id="countKids" promptText="100" styleClass="filterTextField" minWidth="34"
+                               prefWidth="34"
+                               maxWidth="34"/>
+                </Pane>
+            </FlowPane>
+
+            <Pane>
+                <VBox fx:id="musicianPane" visible="false" maxWidth="284" minWidth="284">
+                    <ComboBox fx:id="instrumentBox" promptText="Инструмент" minWidth="284" maxWidth="284" maxHeight="36"
+                              minHeight="36">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Акустическая гитара"/>
+                                <String fx:value="Виолончель"/>
+                                <String fx:value="Гитара"/>
+                                <String fx:value="Кларнет"/>
+                                <String fx:value="Орган"/>
+                                <String fx:value="Пианино"/>
+                                <String fx:value="Скрипка"/>
+                                <String fx:value="Тромбон"/>
+                                <String fx:value="Трубка"/>
+                                <String fx:value="Флейта"/>
+                                <String fx:value="Фортепиано"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+
+                <VBox fx:id="actorPane" visible="false" spacing="20">
+                    <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                              alignment="CENTER_LEFT">
+                        <Label text="Рост, м" styleClass="textForms"/>
+                        <Pane styleClass="filterTextFieldPane" minWidth="42" prefWidth="42" maxWidth="42">
+                            <TextField fx:id="heightActor" promptText="1.99" styleClass="filterTextField" minWidth="38"
+                                       prefWidth="38"
+                                       maxWidth="38"/>
+                        </Pane>
+                    </FlowPane>
+
+                    <ComboBox fx:id="typeTimbreActorBox" promptText="Тембр голоса" minWidth="284" maxWidth="284"
+                              maxHeight="36"
+                              minHeight="36">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Баритон"/>
+                                <String fx:value="Бас"/>
+                                <String fx:value="Контральто"/>
+                                <String fx:value="Меццо-сопрано"/>
+                                <String fx:value="Сопрано"/>
+                                <String fx:value="Тенор"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+            </Pane>
+        </VBox>
+
+        <Hyperlink fx:id="addOnStep3" onAction="#addOnStep3" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
+                   text="Добавить"/>
+        <Hyperlink fx:id="editOnStep3" visible="false" styleClass="actionHyperlinks" layoutX="239"
+                   layoutY="300" text="Изменить"/>
+
+        <Button fx:id="backToStep2" onAction="#backToStep2" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+                maxHeight="40"
+                maxWidth="40" layoutX="20" layoutY="288" id="nextMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-left.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </AnchorPane>
+</AnchorPane>
+
+

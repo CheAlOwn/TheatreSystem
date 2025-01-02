@@ -1,22 +1,19 @@
 package com.theatre.theatre_system.database.dao;
 
+import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.models.Employee;
 import com.theatre.theatre_system.repositories.derivative.EmployeeRepository;
 
 import java.sql.*;
-import java.util.List;
 
 public class EmployeeDAO implements EmployeeRepository {
-    Connection connection;
+    Connection connection = MainRecord.connection;
     PreparedStatement preparedStatement;
     ResultSet rs;
     String query;
-//    List<Employee> employees;
-
     /*TODO: ВСЕ ЭТО МЕГА ПОДОЗРИТЕЛЬНО И НУЖНО ВСЕ БОЛЕЕ ДЕТАЛЬНО ПРОРАБОТАТЬ*/
 
-    EmployeeDAO(Connection connection) {
-        this.connection = connection;
+    public EmployeeDAO() {
     }
 
 
@@ -28,7 +25,7 @@ public class EmployeeDAO implements EmployeeRepository {
         preparedStatement.setString(2, entity.getLastName());
         preparedStatement.setString(3, entity.getFirstName());
         preparedStatement.setString(4, entity.getMiddleName());
-        preparedStatement.setDate(5, entity.getBirthday());
+        preparedStatement.setDate(5, Date.valueOf(entity.getBirthday()));
         preparedStatement.setString(6, entity.getGender());
         preparedStatement.setInt(7, entity.getHireYear());
         preparedStatement.setString(8, entity.getCategory());
@@ -76,7 +73,7 @@ public class EmployeeDAO implements EmployeeRepository {
         rs = preparedStatement.executeQuery();
 
         while (rs.next()) {
-            employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getFloat(10), rs.getString(11), rs.getString(12), rs.getInt(13), rs.getInt(14));
+            employee = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5).toLocalDate(), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getFloat(10), rs.getString(11), rs.getString(12), rs.getInt(13), rs.getInt(14));
         }
 
         return employee;
@@ -89,7 +86,7 @@ public class EmployeeDAO implements EmployeeRepository {
         preparedStatement.setString(1, entity.getLastName());
         preparedStatement.setString(2, entity.getFirstName());
         preparedStatement.setString(3, entity.getMiddleName());
-        preparedStatement.setDate(4, entity.getBirthday());
+        preparedStatement.setDate(4, Date.valueOf(entity.getBirthday()));
         preparedStatement.setString(5, entity.getGender());
         preparedStatement.setInt(6, entity.getHireYear());
         preparedStatement.setString(7, entity.getCategory());

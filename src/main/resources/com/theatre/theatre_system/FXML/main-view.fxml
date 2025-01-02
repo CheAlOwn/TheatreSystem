@@ -84,7 +84,7 @@
 
     <FlowPane fx:id="actionsPane" visible="false" id="actionsPane" minWidth="70" minHeight="140" maxHeight="140"
               maxWidth="70"
-              prefHeight="140" prefWidth="70" layoutX="900" layoutY="530" alignment="CENTER" vgap="8">
+              prefHeight="140" prefWidth="70" layoutX="900" layoutY="530" alignment="CENTER" vgap="20">
         <Button fx:id="editObjectButton" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
             <graphic>
@@ -105,7 +105,7 @@
 
     <!--    СТРОКА ПОИСКА   -->
     <HBox visible="false" fx:id="searchBox" spacing="12" layoutY="22" layoutX="227">
-        <ComboBox fx:id="parametersBox" promptText="Параметр" minWidth="136" maxWidth="136" maxHeight="36"
+        <ComboBox fx:id="parametersBox" minWidth="136" maxWidth="136" maxHeight="36"
                   minHeight="36"/>
         <TextField fx:id="searchTextField" styleClass="formsTextField" promptText="Поиск" minWidth="340" maxWidth="340"
                    maxHeight="36" minHeight="36"/>
@@ -113,8 +113,6 @@
 
 
     <!--    ПАНЕЛЬ МЕНЮ      -->
-
-
     <Rectangle fx:id="overlayPane" visible="false" style="-fx-fill: rgba(0, 0, 0, 0.5);" width="1000" height="700"/>
 
     <AnchorPane fx:id="menuPane" visible="false" id="menuPane" maxWidth="278" maxHeight="700" minHeight="700"
@@ -187,6 +185,22 @@
                 maxHeight="428" minHeight="428" minWidth="344"
                 prefHeight="428" prefWidth="344"
                 style="-fx-background-color: #fff; -fx-background-radius: 24px;" layoutX="328" layoutY="136">
+        <Pane maxWidth="344" minWidth="344" prefWidth="344" maxHeight="80" minHeight="80" prefHeight="80">
+            <Button fx:id="closeFormButton" onAction="#closeForm" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+                    maxWidth="40" layoutX="284" layoutY="20" id="closeMenuButton" styleClass="navButtons">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../icons/x.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
 
+            <Label text="Форма" styleClass="header2" layoutY="23" layoutX="133"/>
+        </Pane>
+
+<!--        НУЖНА АНИМА-->
+        <AnchorPane fx:id="form" minHeight="348" maxHeight="348" prefHeight="348" minWidth="344" maxWidth="344" prefWidth="344" layoutY="82">
+
+        </AnchorPane>
     </AnchorPane>
 </AnchorPane>

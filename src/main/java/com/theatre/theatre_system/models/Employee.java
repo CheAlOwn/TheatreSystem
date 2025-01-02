@@ -1,13 +1,14 @@
 package com.theatre.theatre_system.models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Employee {
     private int employeeId;
     private String lastName;
     private String firstName;
     private String middleName;
-    private Date birthday;
+    private LocalDate birthday;
     private String gender;
     private int hireYear;
     private String category;
@@ -18,7 +19,7 @@ public class Employee {
     private int experience;
     private int childrenCount;
 
-    public Employee(String lastName, String firstName, String middleName, Date birthday, String gender, int hireYear, String category, String post, float salary, String phone, String address, int experience, int childrenCount) {
+    public Employee(String lastName, String firstName, String middleName, LocalDate birthday, String gender, int hireYear, String category, String post, float salary, String phone, String address, int experience, int childrenCount) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -34,7 +35,7 @@ public class Employee {
         this.childrenCount = childrenCount;
     }
 
-    public Employee(int employeeId, String lastName, String firstName, String middleName, Date birthday, String gender, int hireYear, String category, String post, float salary, String phone, String address, int experience, int childrenCount) {
+    public Employee(int employeeId, String lastName, String firstName, String middleName, LocalDate birthday, String gender, int hireYear, String category, String post, float salary, String phone, String address, int experience, int childrenCount) {
         this.employeeId = employeeId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -83,11 +84,11 @@ public class Employee {
         this.middleName = middleName;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

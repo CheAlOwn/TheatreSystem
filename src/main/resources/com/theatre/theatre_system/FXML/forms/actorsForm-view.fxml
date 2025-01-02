@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.collections.FXCollections?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.forms.ActorsFormController"
+            maxWidth="344"
+            maxHeight="348" minHeight="348" minWidth="344"
+            prefHeight="348" prefWidth="344"
+            style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../CSS/mainStyle.css">
+
+    <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="ID работника" styleClass="textForms"/>
+            <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                <TextField fx:id="employeeIdField" promptText="10000" styleClass="filterTextField" minWidth="52"
+                           prefWidth="52"
+                           maxWidth="52"/>
+            </Pane>
+        </FlowPane>
+
+        <ComboBox fx:id="typeTimbreActorBox" promptText="Тембр голоса" minWidth="284" maxWidth="284" maxHeight="36"
+                  minHeight="36">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Баритон"/>
+                    <String fx:value="Бас"/>
+                    <String fx:value="Контральто"/>
+                    <String fx:value="Меццо-сопрано"/>
+                    <String fx:value="Сопрано"/>
+                    <String fx:value="Тенор"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="Рост, м" styleClass="textForms"/>
+            <Pane styleClass="filterTextFieldPane" minWidth="42" prefWidth="42" maxWidth="42">
+                <TextField fx:id="heightIdField" promptText="1.99" styleClass="filterTextField" minWidth="38"
+                           prefWidth="38"
+                           maxWidth="38"/>
+            </Pane>
+        </FlowPane>
+    </VBox>
+
+    <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewActor" styleClass="actionHyperlinks" layoutX="239"
+               layoutY="300" text="Добавить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="380"
+               text="Изменить"/>
+
+</AnchorPane>

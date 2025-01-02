@@ -4,27 +4,24 @@ public class Performance {
     private int performanceId;
     private String name;
     private String genre;
-    private String type;
     private String author;
     private int directorId;
     private int setDesignerId;
     private int conductorId;
 
-    public Performance(String name, String genre, String type, String author, int directorId, int setDesignerId, int conductorId) {
+    public Performance(String name, String genre, String author, int directorId, int setDesignerId, int conductorId) {
         this.name = name;
         this.genre = genre;
-        this.type = type;
         this.author = author;
         this.directorId = directorId;
         this.setDesignerId = setDesignerId;
         this.conductorId = conductorId;
     }
 
-    public Performance(int performanceId, String name, String genre, String type, String author, int directorId, int setDesignerId, int conductorId) {
+    public Performance(int performanceId, String name, String genre, String author, int directorId, int setDesignerId, int conductorId) {
         this.performanceId = performanceId;
         this.name = name;
         this.genre = genre;
-        this.type = type;
         this.author = author;
         this.directorId = directorId;
         this.setDesignerId = setDesignerId;
@@ -53,14 +50,6 @@ public class Performance {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getAuthor() {

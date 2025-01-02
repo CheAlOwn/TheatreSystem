@@ -12,22 +12,11 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.theatre.theatre_system.controllers.forms.TicketsFormController"
             maxWidth="344"
-            maxHeight="428" minHeight="428" minWidth="344"
-            prefHeight="428" prefWidth="344"
-            style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../../CSS/mainStyle.css">
+            maxHeight="348" minHeight="348" minWidth="344"
+            prefHeight="348" prefWidth="344"
+            style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../CSS/mainStyle.css">
 
-    <Button fx:id="closeMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
-            maxWidth="40" layoutX="284" layoutY="20" id="closeMenuButton" styleClass="navButtons">
-        <graphic>
-            <ImageView>
-                <Image url="@../../../icons/x.png"/>
-            </ImageView>
-        </graphic>
-    </Button>
-
-    <Label text="Форма" styleClass="header2" layoutY="23" layoutX="133"/>
-
-    <VBox spacing="20" layoutY="82" layoutX="30" maxWidth="284" minWidth="284">
+    <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
         <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
                   alignment="CENTER_LEFT">
             <Label text="ID репертуара" styleClass="textForms"/>
@@ -59,9 +48,19 @@
         </FlowPane>
 
         <ComboBox fx:id="ticketSellStatus" promptText="Статус продажи" minWidth="284" maxWidth="284" maxHeight="36" minHeight="36"/>
+
+        <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                  alignment="CENTER_LEFT">
+            <Label text="Дата продажи" styleClass="textForms" id="specialText"/>
+            <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
+                <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="82"
+                           prefWidth="82"
+                           maxWidth="82"/>
+            </Pane>
+        </FlowPane>
     </VBox>
 
-    <Hyperlink fx:id="addForRecordHyperlink" styleClass="actionHyperlinks" layoutX="239" layoutY="380" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="380" text="Изменить"/>
+    <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewTicket" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Добавить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
 
 </AnchorPane>

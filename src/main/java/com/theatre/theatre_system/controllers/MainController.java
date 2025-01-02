@@ -1,9 +1,11 @@
 package com.theatre.theatre_system.controllers;
 
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.search_system.Search;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -21,9 +24,16 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class MainController {
+    @FXML
+    private Button closeFormButton;
+
+    @FXML
+    protected AnchorPane form;
+
     @FXML
     private Button closeFiltersButton;
 
@@ -117,16 +127,11 @@ public class MainController {
     @FXML
     private Button removeObjectButton;
 
-    @FXML
-    private Pane floatPane;
-
     private final Connection connection = MainRecord.connection;
-    private Statement statement;
-    private String query;
     private Hyperlink currentHyperlink;
+    private String currentTable;
 
-    final double[] offsetX = {0};
-    final double[] offsetY = {0};
+    final double[] offsetX = {0}, offsetY = {0};
 
     private boolean isSearchVisible = false;
 
@@ -135,6 +140,9 @@ public class MainController {
 
     @FXML
     void initialize() throws SQLException {
+        MainRecord.form = form;
+        MainRecord.table = tableOutData;
+
         setEffects();
 
         menuPane.setTranslateX(-278);
@@ -162,8 +170,69 @@ public class MainController {
         searchBox.setVisible(false);
         searchBox.setOpacity(0);
 
-        MainRecord.overlayPane = overlayPane;
-        MainRecord.filtersPane = filtersPane;
+
+        //TODO: сначала сделать добавление новых данных
+        Search search = new Search();
+        searchTextField.textProperty().addListener(text -> {
+            try {
+                if (!Objects.equals(parametersBox.getSelectionModel().getSelectedItem().toString(), "Параметр"))
+                    setColumns(search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText()));
+                else {
+                    setColumns(connection.createStatement().executeQuery("SELECT * FROM " + currentTable));}
+            } catch (SQLException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
+    }
+
+    protected void setColumns(ResultSet resultSet) throws SQLException {
+        MainRecord.table.getColumns().clear();
+        ObservableList<ObservableList<Object>> rows = FXCollections.observableArrayList(); // Хранилище строк. Такой подход используется потому что мы не знаем заранее из какой таблицы будут вытягиваться данные
+        ResultSetMetaData rsMetaData = resultSet.getMetaData();
+        int columnCount = rsMetaData.getColumnCount();
+
+        for (int i = 1; i <= columnCount; i++) {
+            final int columnIndex = i - 1; // задаем индекс колонки
+            String columnName = rsMetaData.getColumnLabel(i);
+
+            TableColumn<ObservableList<Object>, Object> column = getObservableListObjectTableColumn(columnName, columnIndex, i);
+
+            MainRecord.table.getColumns().add(column);
+        }
+
+        while (resultSet.next()) {
+            ObservableList<Object> row = FXCollections.observableArrayList();
+            for (int i = 1; i <= columnCount; i++) {
+                row.add(resultSet.getObject(i));
+            }
+            rows.add(row);
+        }
+
+        MainRecord.table.setItems(rows);
+//        tableOutData.getSelectionModel().selectedItemProperty().addListener(event -> {
+//            addRecordPane.setVisible(false);
+//            actionsPane.setVisible(true);
+//        });
+    }
+
+    private TableColumn<ObservableList<Object>, Object> getObservableListObjectTableColumn(String columnName, int columnIndex, int i) {
+        TableColumn<ObservableList<Object>, Object> column = new TableColumn<>(columnName);
+        column.setCellValueFactory(param -> {
+            if (param.getValue().size() > columnIndex) {
+                return new SimpleObjectProperty<>(param.getValue().get(columnIndex));
+            } else {
+                return null;
+            }
+        });
+
+        if (i == 1) column.setStyle("-fx-background-radius: 12px 0px 0px 12px; -fx-border-radius: 12px 0px 0px 12px;");
+        return column;
+    }
+
+    public ResultSet getData(String table) throws SQLException {
+        String query = "SELECT * FROM " + table + ";";
+        Statement statement = connection.createStatement();
+        return statement.executeQuery(query);
     }
 
     private void setEffects() {
@@ -185,37 +254,31 @@ public class MainController {
         addRecordPane.setEffect(dropShadow);
     }
 
-    private void setOpen(Pane pane, int ...shearValue) {
+    private void setOpen(Pane pane, int... shearValue) {
         if (!pane.isVisible()) {
             pane.setVisible(true);
 
-            // Анимация выезда меню
             TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), pane);
-            slideIn.setToX(0); // Переместить меню на видимую область
+            slideIn.setToX(0);
 
-            // Анимация затемнения фона
-            overlayPane.setVisible(true); // Показываем затемнение
+            overlayPane.setVisible(true);
             FadeTransition fadeIn = new FadeTransition(Duration.millis(300), overlayPane);
-            fadeIn.setFromValue(0); // Полностью прозрачный
-            fadeIn.setToValue(1); // Полностью непрозрачный
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
 
-            // Запуск анимации
             slideIn.play();
             fadeIn.play();
         } else {
             pane.setVisible(false);
 
-            // Анимация скрытия меню
             TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), pane);
-            slideOut.setToX(shearValue[0]); // Вернуть меню за пределы окна
+            slideOut.setToX(shearValue[0]);
 
-            // Анимация скрытия затемнения
             FadeTransition fadeOut = new FadeTransition(Duration.millis(300), overlayPane);
-            fadeOut.setFromValue(1); // Полностью непрозрачный
-            fadeOut.setToValue(0); // Полностью прозрачный
-            fadeOut.setOnFinished(event -> overlayPane.setVisible(false)); // Скрыть затемнение после анимации
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setOnFinished(event -> overlayPane.setVisible(false));
 
-            // Запуск анимации
             slideOut.play();
             fadeOut.play();
         }
@@ -231,53 +294,6 @@ public class MainController {
         setOpen(menuPane, -278);
     }
 
-    private ResultSet getData(String table) throws SQLException {
-        statement = connection.createStatement();
-        query = "SELECT * FROM " + table + ";";
-        return statement.executeQuery(query);
-    }
-
-    private void setColumns(ResultSet resultSet) throws SQLException {
-        tableOutData.getColumns().clear();
-        ObservableList<ObservableList<Object>> rows = FXCollections.observableArrayList(); // Хранилище строк. Такой подход используется потому что мы не знаем заранее из какой таблицы будут вытягиваться данные
-        ResultSetMetaData rsMetaData = resultSet.getMetaData();
-        int columnCount = rsMetaData.getColumnCount();
-
-        for (int i = 1; i < columnCount; i++) {
-            final int columnIndex = i - 1; // задаем индекс колонки
-            String columnName = rsMetaData.getColumnLabel(i);
-
-            TableColumn<ObservableList<Object>, Object> column = getObservableListObjectTableColumn(columnName, columnIndex, i);
-
-            tableOutData.getColumns().add(column);
-        }
-
-        while (resultSet.next()) {
-            ObservableList<Object> row = FXCollections.observableArrayList();
-            for (int i = 1; i <= columnCount; i++) {
-                row.add(resultSet.getObject(i));
-            }
-            rows.add(row);
-        }
-
-        tableOutData.setItems(rows);
-
-    }
-
-    private static TableColumn<ObservableList<Object>, Object> getObservableListObjectTableColumn(String columnName, int columnIndex, int i) {
-        TableColumn<ObservableList<Object>, Object> column = new TableColumn<>(columnName);
-        column.setCellValueFactory(param -> {
-            if (param.getValue().size() > columnIndex) {
-                return new javafx.beans.property.SimpleObjectProperty<>(param.getValue().get(columnIndex));
-            } else {
-                return null;
-            }
-        });
-
-        if (i == 1) column.setStyle("-fx-background-radius: 12px 0px 0px 12px; -fx-border-radius: 12px 0px 0px 12px;");
-        return column;
-    }
-
     private void switchTables(Hyperlink hyperlink, String table) throws SQLException {
         // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
         if (currentHyperlink != null) {
@@ -289,6 +305,9 @@ public class MainController {
         currentHyperlink.setDisable(true); // выключаем ее
         tableName.setText(currentHyperlink.getText()); // устанавливаем правильное название таблицы на главной странице
         setColumns(getData(table)); // Заполняем таблицу колонками
+        currentTable = table;
+
+        setSearchParameters(table);
     }
 
     @FXML
@@ -349,8 +368,33 @@ public class MainController {
     }
 
     @FXML
-    private void addNewRecord(ActionEvent actionEvent) {
+    private void addNewRecord(ActionEvent actionEvent) throws IOException {
+        // устанавливаем видимость и прозрачность затемняющей панели
+        overlayPane.setVisible(true);
+        overlayPane.setOpacity(0.5);
 
+        // делаем видимой панель с формами
+        formsPane.setVisible(true);
+
+
+        switch (currentHyperlink.getText()) {
+            case "Актеры" -> loadScene(form, "../FXML/forms/actorsForm-view.fxml");
+            case "Работники" -> loadScene(form, "../FXML/forms/employeesForm-view.fxml");
+            case "Музыканты" -> loadScene(form, "../FXML/forms/musiciansForm-view.fxml");
+            case "Спектакли" -> loadScene(form, "../FXML/forms/performancesForm-view.fxml");
+            case "Репертуары" -> loadScene(form, "../FXML/forms/repertoiresForm-view.fxml");
+            case "Билеты" -> loadScene(form, "../FXML/forms/ticketsForm-view.fxml");
+            case "Гастроли" -> loadScene(form, "../FXML/forms/toursForm-view.fxml");
+            case "Роли" -> loadScene(form, "../FXML/forms/rolesForm-view.fxml");
+            default -> logger.warning("load error");
+        }
+    }
+
+    @FXML
+    private void closeForm(ActionEvent actionEvent) {
+        overlayPane.setVisible(false);
+        overlayPane.setOpacity(1);
+        formsPane.setVisible(false);
     }
 
     private void showSearchBox() {
@@ -392,23 +436,39 @@ public class MainController {
         hideAnimation.play();
     }
 
-    // TODO: доделать
-    @FXML
-    private void toggleSearch(ActionEvent actionEvent) {
-        if (isSearchVisible) {
-            hideSearchBox(); // Если открыто - скрыть
-        } else {
-            showSearchBox(); // Если скрыто - показать
+    private void setSearchParameters(String table) throws SQLException {
+        parametersBox.getSelectionModel().clearSelection();
+        parametersBox.getItems().clear();
+
+        ResultSetMetaData rsMetaData = getData(table).getMetaData();
+        int columnCount = rsMetaData.getColumnCount();
+
+        for (int i = 1; i <= columnCount; i++) {
+            parametersBox.getItems().add(rsMetaData.getColumnLabel(i));
         }
-        isSearchVisible = !isSearchVisible;
+
+        parametersBox.getItems().addFirst("Параметр");
+        parametersBox.getSelectionModel().selectFirst();
     }
 
-    private void loadSceneFilter(Pane pane, String path) throws IOException {
+    //TODO: доделать
+    @FXML
+    private void toggleSearch(ActionEvent actionEvent) {
+        if (isSearchVisible && searchTextField.getText().isBlank()) {
+            hideSearchBox(); // Если открыто - скрыть
+            isSearchVisible = false;
+        } else if (!isSearchVisible) {
+            showSearchBox();
+            isSearchVisible = true;
+        }
+    }
+
+    protected void loadScene(Pane pane, String path) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-        Node filterNode = loader.load();
+        Node node = loader.load();
 
         pane.getChildren().clear();
-        pane.getChildren().add(filterNode);
+        pane.getChildren().add(node);
     }
 
     @FXML
@@ -416,13 +476,13 @@ public class MainController {
         setOpen(filtersPane);
 
         switch (currentHyperlink.getText()) {
-            case "Актеры" -> loadSceneFilter(fPane, "../FXML/filters/actorsFilter-view.fxml");
-            case "Работники" -> loadSceneFilter(fPane, "../FXML/filters/employeesFilter-view.fxml");
-            case "Музыканты" -> loadSceneFilter(fPane, "../FXML/filters/musiciansFilter-view.fxml");
-            case "Спектакли" -> loadSceneFilter(fPane, "../FXML/filters/performancesFilter-view.fxml");
-            case "Репертуары" -> loadSceneFilter(fPane, "../FXML/filters/repertoiresFilter-view.fxml");
-            case "Билеты" -> loadSceneFilter(fPane, "../FXML/filters/ticketsFilter-view.fxml");
-            case "Гастроли" -> loadSceneFilter(fPane, "../FXML/filters/toursFilter-view.fxml");
+            case "Актеры" -> loadScene(fPane, "../FXML/filters/actorsFilter-view.fxml");
+            case "Работники" -> loadScene(fPane, "../FXML/filters/employeesFilter-view.fxml");
+            case "Музыканты" -> loadScene(fPane, "../FXML/filters/musiciansFilter-view.fxml");
+            case "Спектакли" -> loadScene(fPane, "../FXML/filters/performancesFilter-view.fxml");
+            case "Репертуары" -> loadScene(fPane, "../FXML/filters/repertoiresFilter-view.fxml");
+            case "Билеты" -> loadScene(fPane, "../FXML/filters/ticketsFilter-view.fxml");
+            case "Гастроли" -> loadScene(fPane, "../FXML/filters/toursFilter-view.fxml");
             default -> logger.warning("load error");
         }
     }

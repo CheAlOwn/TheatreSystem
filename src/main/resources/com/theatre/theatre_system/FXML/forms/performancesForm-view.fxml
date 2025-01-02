@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.collections.FXCollections?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.theatre.theatre_system.controllers.forms.PerformancesFormController"
+            maxWidth="344"
+            maxHeight="348" minHeight="348" minWidth="344"
+            prefHeight="348" prefWidth="344">
+    <AnchorPane fx:id="step1Pane" style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../CSS/mainStyle.css">
+
+        <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+            <TextField fx:id="performanceTitle" styleClass="formsTextField" promptText="Название спектакля"
+                       minWidth="284" maxWidth="284" maxHeight="36" minHeight="36"/>
+            <ComboBox fx:id="performanceGenre" promptText="Жанр" minWidth="284" maxWidth="284" maxHeight="36"
+                      minHeight="36">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Балет"/>
+                        <String fx:value="Водевиль"/>
+                        <String fx:value="Драма"/>
+                        <String fx:value="Кабаре"/>
+                        <String fx:value="Комедия"/>
+                        <String fx:value="Мюзикл"/>
+                        <String fx:value="Опера"/>
+                        <String fx:value="Оперетта"/>
+                        <String fx:value="Трагедия"/>
+                        <String fx:value="Фарс"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <TextField fx:id="performanceAuthor" styleClass="formsTextField" promptText="Автор" minWidth="284"
+                       maxWidth="284" maxHeight="36" minHeight="36"/>
+        </VBox>
+
+        <Button fx:id="nextMenuButton" onAction="#nextStep" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+                maxWidth="40" layoutX="284" layoutY="288" id="nextMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-right.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </AnchorPane>
+
+    <AnchorPane fx:id="step2Pane" visible="false" style="-fx-background-color: #fff; -fx-background-radius: 24px;" stylesheets="@../../CSS/mainStyle.css">
+
+        <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="ID режиссера-постановщика" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                    <TextField fx:id="performanceDirector" promptText="10000" styleClass="filterTextField" minWidth="52"
+                               prefWidth="52"
+                               maxWidth="52"/>
+                </Pane>
+            </FlowPane>
+
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="ID художника-постановщика" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                    <TextField fx:id="performanceArtist" promptText="10000" styleClass="filterTextField" minWidth="52"
+                               prefWidth="52"
+                               maxWidth="52"/>
+                </Pane>
+            </FlowPane>
+
+            <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
+                      alignment="CENTER_LEFT">
+                <Label text="ID дирижера-постановщика" styleClass="textForms"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
+                    <TextField fx:id="performanceConductor" promptText="10000" styleClass="filterTextField"
+                               minWidth="52" prefWidth="52"
+                               maxWidth="52"/>
+                </Pane>
+            </FlowPane>
+        </VBox>
+
+        <Button fx:id="backMenuButton" onAction="#backStep" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+                maxWidth="40" layoutX="20" layoutY="288" id="nextMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../../icons/chevron-left.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewPerformance" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
+                   text="Добавить"/>
+        <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239"
+                   layoutY="300" text="Изменить"/>
+
+    </AnchorPane>
+</AnchorPane>

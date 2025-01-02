@@ -2,30 +2,32 @@ package com.theatre.theatre_system.models;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Repertoire {
     private int repertoireId;
     private int performanceId;
-    private Date showDate;
-    private Time shoeTime;
+    private LocalDate showDate;
+    private LocalTime showTime;
     private boolean isPremiere;
     private String period;
     private float price;
 
-    public Repertoire(int performanceId, Date showDate, Time shoeTime, boolean isPremiere, String period, float price) {
+    public Repertoire(int performanceId, LocalDate showDate, LocalTime showTime, boolean isPremiere, String period, float price) {
         this.performanceId = performanceId;
         this.showDate = showDate;
-        this.shoeTime = shoeTime;
+        this.showTime = showTime;
         this.isPremiere = isPremiere;
         this.period = period;
         this.price = price;
     }
 
-    public Repertoire(int repertoireId, int performanceId, Date showDate, Time shoeTime, boolean isPremiere, String period, float price) {
+    public Repertoire(int repertoireId, int performanceId, LocalDate showDate, LocalTime showTime, boolean isPremiere, String period, float price) {
         this.repertoireId = repertoireId;
         this.performanceId = performanceId;
         this.showDate = showDate;
-        this.shoeTime = shoeTime;
+        this.showTime = showTime;
         this.isPremiere = isPremiere;
         this.period = period;
         this.price = price;
@@ -47,20 +49,20 @@ public class Repertoire {
         this.performanceId = performanceId;
     }
 
-    public Date getShowDate() {
+    public LocalDate getShowDate() {
         return showDate;
     }
 
-    public void setShowDate(Date showDate) {
+    public void setShowDate(LocalDate showDate) {
         this.showDate = showDate;
     }
 
-    public Time getShoeTime() {
-        return shoeTime;
+    public LocalTime getShowTime() {
+        return showTime;
     }
 
-    public void setShoeTime(Time shoeTime) {
-        this.shoeTime = shoeTime;
+    public void setShowTime(LocalTime showTime) {
+        this.showTime = showTime;
     }
 
     public boolean isPremiere() {

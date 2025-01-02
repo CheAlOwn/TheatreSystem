@@ -1,22 +1,22 @@
 package com.theatre.theatre_system.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Tour {
     private int tourId;
     private int employeeId;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String location;
 
-    public Tour(int employeeId, Date startDate, Date endDate, String location) {
+    public Tour(int employeeId, LocalDate startDate, LocalDate endDate, String location) {
         this.employeeId = employeeId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
     }
 
-    public Tour(Date startDate, Date endDate, String location, int employeeId, int tourId) {
+    public Tour(int employeeId, int tourId, LocalDate startDate, LocalDate endDate, String location) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
@@ -40,19 +40,19 @@ public class Tour {
         this.employeeId = employeeId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
