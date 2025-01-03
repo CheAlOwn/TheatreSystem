@@ -46,6 +46,6 @@
     </VBox>
 
     <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewMusician" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" onAction="#editMusician" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
 
 </AnchorPane>

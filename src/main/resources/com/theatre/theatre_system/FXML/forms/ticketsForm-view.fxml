@@ -53,14 +53,14 @@
                   alignment="CENTER_LEFT">
             <Label text="Дата продажи" styleClass="textForms" id="specialText"/>
             <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="82"
-                           prefWidth="82"
-                           maxWidth="82"/>
+                <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="83"
+                           prefWidth="83"
+                           maxWidth="83"/>
             </Pane>
         </FlowPane>
     </VBox>
 
     <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewTicket" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" onAction="#editTicket" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
 
 </AnchorPane>

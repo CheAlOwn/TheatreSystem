@@ -17,9 +17,8 @@ public class TicketDAO implements TicketRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM tickets WHERE ticket_id = " + id);
     }
 
     @Override
@@ -60,8 +59,25 @@ public class TicketDAO implements TicketRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Ticket entity) throws SQLException {
+        if (entity.getSaleDate() != null) {
+            query = "UPDATE tickets SET repertoire_id = ?, seat = ?, price = ?, status = ?, sale_date = ? WHERE ticket_id = " + id;
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, entity.getRepertoireId());
+            preparedStatement.setString(2, entity.getSeat());
+            preparedStatement.setFloat(3, entity.getPrice());
+            preparedStatement.setString(4, entity.getStatus());
+            preparedStatement.setDate(5, Date.valueOf(entity.getSaleDate()));
+        } else {
+            query = "UPDATE tickets SET repertoire_id = ?, seat = ?, price = ?, status = ? WHERE ticket_id = " + id;
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, entity.getRepertoireId());
+            preparedStatement.setString(2, entity.getSeat());
+            preparedStatement.setFloat(3, entity.getPrice());
+            preparedStatement.setString(4, entity.getStatus());
+        }
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

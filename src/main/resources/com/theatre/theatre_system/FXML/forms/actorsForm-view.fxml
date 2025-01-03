@@ -55,7 +55,7 @@
 
     <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewActor" styleClass="actionHyperlinks" layoutX="239"
                layoutY="300" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="380"
+    <Hyperlink fx:id="editForRecordHyperlink" onAction="#editActor" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
                text="Изменить"/>
 
 </AnchorPane>

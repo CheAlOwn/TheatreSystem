@@ -34,6 +34,7 @@ public class MusiciansFormController extends MainController {
 
     MusicianDAO musicianDAO = new MusicianDAO();
     private Connection connection = MainRecord.connection;
+    private String id;
 
     @FXML
     private void initialize() throws SQLException {
@@ -42,6 +43,23 @@ public class MusiciansFormController extends MainController {
     @FXML
     private void addNewMusician(ActionEvent actionEvent) throws SQLException {
         musicianDAO.insert(new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
+        setColumns(getData("musicians"));
+    }
+
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        employeeIdField.setText(selected[1]);
+        employeeIdField.setDisable(true);
+
+        instrumentBox.getSelectionModel().select(selected[2]);
+    }
+
+    @FXML
+    private void editMusician(ActionEvent actionEvent) throws SQLException {
+        musicianDAO.update(Integer.parseInt(id), new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
         setColumns(getData("musicians"));
     }
 }

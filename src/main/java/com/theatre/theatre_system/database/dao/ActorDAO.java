@@ -4,10 +4,7 @@ import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.models.Actor;
 import com.theatre.theatre_system.repositories.derivative.ActorRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ActorDAO implements ActorRepository {
     Connection connection = MainRecord.connection;
@@ -20,9 +17,8 @@ public class ActorDAO implements ActorRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM actors WHERE actor_id = " + id);
     }
 
     @Override
@@ -52,8 +48,13 @@ public class ActorDAO implements ActorRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Actor entity) throws SQLException{
+        query = "UPDATE actors SET height = ?, voice_type = ? WHERE actor_id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setFloat(1, entity.getHeight());
+        preparedStatement.setString(2, entity.getTimbre());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

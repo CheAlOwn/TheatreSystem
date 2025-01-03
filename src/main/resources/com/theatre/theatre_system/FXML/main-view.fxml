@@ -69,8 +69,9 @@
 
     <!--    ПАНЕЛЬ ДЕЙСТВИЙ С ТАБЛИЦАМИ     -->
 
-    <FlowPane fx:id="addRecordPane" id="actionsPane" minWidth="78" minHeight="78" maxHeight="78" maxWidth="78"
-              prefHeight="78" prefWidth="78" layoutX="900" layoutY="600" alignment="CENTER">
+    <FlowPane fx:id="actionsPane" id="actionsPane" minWidth="70" minHeight="210" maxHeight="210"
+              maxWidth="70"
+              prefHeight="210" prefWidth="70" layoutX="900" layoutY="460" alignment="CENTER" vgap="23">
         <Button fx:id="addObjectButton" onAction="#addNewRecord" styleClass="actionTableButtons" minHeight="40"
                 minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
@@ -80,12 +81,7 @@
                 </ImageView>
             </graphic>
         </Button>
-    </FlowPane>
-
-    <FlowPane fx:id="actionsPane" visible="false" id="actionsPane" minWidth="70" minHeight="140" maxHeight="140"
-              maxWidth="70"
-              prefHeight="140" prefWidth="70" layoutX="900" layoutY="530" alignment="CENTER" vgap="20">
-        <Button fx:id="editObjectButton" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+        <Button fx:id="editObjectButton"  onAction="#editThisRecord" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
             <graphic>
                 <ImageView>
@@ -93,7 +89,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="removeObjectButton" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+        <Button fx:id="removeObjectButton" onAction="#deleteThisRecord" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
             <graphic>
                 <ImageView>

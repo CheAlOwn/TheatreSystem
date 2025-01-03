@@ -34,6 +34,7 @@ public class ToursFormController extends MainController {
     private Hyperlink editForRecordHyperlink;
 
     TourDAO tourDAO = new TourDAO();
+    String id;
 
     @FXML
     private void initialize() {
@@ -43,6 +44,23 @@ public class ToursFormController extends MainController {
     @FXML
     public void addNewTour(ActionEvent actionEvent) throws SQLException {
         tourDAO.insert(new Tour(Integer.parseInt(idEmployee.getText()), LocalDate.parse(dateStart.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalDate.parse(dateEnd.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), place.getText()));
+        setColumns(getData("tours"));
+    }
+
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        idEmployee.setText(selected[1]);
+        dateStart.setText(selected[2]);
+        dateEnd.setText(selected[3]);
+        place.setText(selected[4]);
+    }
+
+    @FXML
+    private void editTour(ActionEvent actionEvent) throws SQLException {
+        tourDAO.update(Integer.parseInt(id), new Tour(Integer.parseInt(idEmployee.getText()), LocalDate.parse(dateStart.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalDate.parse(dateEnd.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), place.getText()));
         setColumns(getData("tours"));
     }
 }

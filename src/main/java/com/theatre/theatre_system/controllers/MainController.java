@@ -1,6 +1,8 @@
 package com.theatre.theatre_system.controllers;
 
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.controllers.forms.*;
+import com.theatre.theatre_system.database.dao.*;
 import com.theatre.theatre_system.search_system.Search;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -24,6 +26,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -119,9 +122,6 @@ public class MainController {
     private TextField searchTextField;
 
     @FXML
-    private FlowPane addRecordPane;
-
-    @FXML
     private Button editObjectButton;
 
     @FXML
@@ -149,21 +149,21 @@ public class MainController {
 
         switchTables(actorsHyperlink, "actors");
 
-        addRecordPane.setOnMousePressed(event -> {
-            offsetX[0] = event.getSceneX() - addRecordPane.getLayoutX();
-            offsetY[0] = event.getSceneY() - addRecordPane.getLayoutY();
+        actionsPane.setOnMousePressed(event -> {
+            offsetX[0] = event.getSceneX() - actionsPane.getLayoutX();
+            offsetY[0] = event.getSceneY() - actionsPane.getLayoutY();
         });
 
-        addRecordPane.setOnMouseDragged(event -> {
+        actionsPane.setOnMouseDragged(event -> {
             double newX = event.getSceneX() - offsetX[0];
             double newY = event.getSceneY() - offsetY[0];
 
             // Ограничение перемещения внутри окна
-            if (newX >= 0 && newX + addRecordPane.getWidth() <= mainPane.getWidth()) {
-                addRecordPane.setLayoutX(newX);
+            if (newX >= 0 && newX + actionsPane.getWidth() <= mainPane.getWidth()) {
+                actionsPane.setLayoutX(newX);
             }
-            if (newY >= 0 && newY + addRecordPane.getHeight() <= mainPane.getHeight()) {
-                addRecordPane.setLayoutY(newY);
+            if (newY >= 0 && newY + actionsPane.getHeight() <= mainPane.getHeight()) {
+                actionsPane.setLayoutY(newY);
             }
         });
 
@@ -178,7 +178,8 @@ public class MainController {
                 if (!Objects.equals(parametersBox.getSelectionModel().getSelectedItem().toString(), "Параметр"))
                     setColumns(search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText()));
                 else {
-                    setColumns(connection.createStatement().executeQuery("SELECT * FROM " + currentTable));}
+                    setColumns(connection.createStatement().executeQuery("SELECT * FROM " + currentTable));
+                }
             } catch (SQLException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -249,9 +250,6 @@ public class MainController {
 
         actionsPane.setEffect(gaussianBlur);
         actionsPane.setEffect(dropShadow);
-
-        addRecordPane.setEffect(gaussianBlur);
-        addRecordPane.setEffect(dropShadow);
     }
 
     private void setOpen(Pane pane, int... shearValue) {
@@ -469,6 +467,8 @@ public class MainController {
 
         pane.getChildren().clear();
         pane.getChildren().add(node);
+
+        MainRecord.nodeLoader = loader;
     }
 
     @FXML
@@ -490,5 +490,120 @@ public class MainController {
     @FXML
     private void closeFilter(ActionEvent actionEvent) {
         setOpen(filtersPane, 334);
+    }
+
+    @FXML
+    private void editThisRecord(ActionEvent actionEvent) throws IOException, SQLException {
+        try {
+            String[] selected = MainRecord.table.getSelectionModel().getSelectedItem().toString().replace("[", "").replace("]", "").split(", ");
+
+            // устанавливаем видимость и прозрачность затемняющей панели
+            overlayPane.setVisible(true);
+            overlayPane.setOpacity(0.5);
+
+            // делаем видимой панель с формами
+            formsPane.setVisible(true);
+
+            switch (currentHyperlink.getText()) {
+                case "Актеры":
+                    loadScene(form, "../FXML/forms/actorsForm-view.fxml");
+                    ActorsFormController actorsFormController = MainRecord.nodeLoader.getController();
+                    actorsFormController.load(selected);
+                    break;
+                case "Работники":
+                    loadScene(form, "../FXML/forms/employeesForm-view.fxml");
+                    EmployeeFormController employeeFormController = MainRecord.nodeLoader.getController();
+                    employeeFormController.load(selected);
+                    break;
+                case "Музыканты":
+                    loadScene(form, "../FXML/forms/musiciansForm-view.fxml");
+                    MusiciansFormController musiciansFormController = MainRecord.nodeLoader.getController();
+                    musiciansFormController.load(selected);
+                    break;
+                case "Спектакли":
+                    loadScene(form, "../FXML/forms/performancesForm-view.fxml");
+                    PerformancesFormController performancesFormController = MainRecord.nodeLoader.getController();
+                    performancesFormController.load(selected);
+                    break;
+                case "Репертуары":
+                    loadScene(form, "../FXML/forms/repertoiresForm-view.fxml");
+                    RepertoiresFormController repertoiresFormController = MainRecord.nodeLoader.getController();
+                    repertoiresFormController.load(selected);
+                    break;
+                case "Роли":
+                    loadScene(form, "../FXML/forms/rolesForm-view.fxml");
+                    RolesFormController rolesFormController = MainRecord.nodeLoader.getController();
+                    rolesFormController.load(selected);
+                    break;
+                case "Билеты":
+                    loadScene(form, "../FXML/forms/ticketsForm-view.fxml");
+                    TicketsFormController ticketsFormController = MainRecord.nodeLoader.getController();
+                    ticketsFormController.load(selected);
+                    break;
+                case "Гастроли":
+                    loadScene(form, "../FXML/forms/toursForm-view.fxml");
+                    ToursFormController toursFormController = MainRecord.nodeLoader.getController();
+                    toursFormController.load(selected);
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (NullPointerException npe) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Select a row from the table!");
+            alert.show();
+        }
+    }
+
+    @FXML
+    private void deleteThisRecord(ActionEvent actionEvent) {
+        try {
+            String objectId = MainRecord.table.getSelectionModel().getSelectedItem().toString().replace("[", "").replace("]", "").split(", ")[0];
+
+            switch (currentHyperlink.getText()) {
+                case "Актеры":
+                    ActorDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("actors"));
+                    break;
+                case "Работники":
+                    EmployeeDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("employees"));
+                    break;
+                case "Музыканты":
+                    MusicianDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("musicians"));
+                    break;
+                case "Спектакли":
+                    PerformanceDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("performances"));
+                    break;
+                case "Репертуары":
+                    RepertoireDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("repertoires"));
+                    break;
+                case "Роли":
+                    RoleDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("roles"));
+                    break;
+                case "Билеты":
+                    TicketDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("tickets"));
+                    break;
+                case "Гастроли":
+                    TourDAO.deleteById(Integer.parseInt(objectId));
+                    setColumns(getData("tours"));
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (NullPointerException npe) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Select a row from the table!");
+            alert.show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

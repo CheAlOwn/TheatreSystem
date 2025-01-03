@@ -46,8 +46,6 @@ public class ActorsFilterController {
     @FXML
     private CheckBox tenorCheckBox;
 
-    private boolean isFiltersOpen = false;
-
     @FXML
     void initialize() {
         ToggleGroup genderGroup = new ToggleGroup();

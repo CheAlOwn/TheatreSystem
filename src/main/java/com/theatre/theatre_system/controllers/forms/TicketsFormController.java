@@ -44,6 +44,7 @@ public class TicketsFormController extends MainController {
 
     TicketDAO ticketDAO = new TicketDAO();
     Connection connection = MainRecord.connection;
+    String id;
 
     @FXML
     private void initialize() {
@@ -61,6 +62,30 @@ public class TicketsFormController extends MainController {
             date = LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
         ticketDAO.insert(new Ticket(Integer.parseInt(idRepertoire.getText()), idSeat.getText(), Float.parseFloat(price.getText()), ticketSellStatus.getSelectionModel().getSelectedItem().toString(), date));
+        setColumns(getData("tickets"));
+    }
+
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        idRepertoire.setText(selected[1]);
+        idSeat.setText(selected[2]);
+        price.setText(selected[3]);
+        ticketSellStatus.getSelectionModel().select(selected[4]);
+        dateShow.setText(selected[5]);
+    }
+
+    @FXML
+    private void editTicket(ActionEvent actionEvent) throws SQLException {
+        LocalDate date;
+        if (dateShow.getText().isBlank()) {
+            date = null;
+        } else {
+            date = LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
+        ticketDAO.update(Integer.parseInt(id), new Ticket(Integer.parseInt(idRepertoire.getText()), idSeat.getText(), Float.parseFloat(price.getText()), ticketSellStatus.getSelectionModel().getSelectedItem().toString(), date));
         setColumns(getData("tickets"));
     }
 }

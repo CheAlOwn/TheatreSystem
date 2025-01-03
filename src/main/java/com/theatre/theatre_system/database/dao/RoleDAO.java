@@ -17,9 +17,8 @@ public class RoleDAO implements RoleRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM roles WHERE id = " + id);
     }
 
     @Override
@@ -50,8 +49,15 @@ public class RoleDAO implements RoleRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Role entity) throws SQLException {
+        query = "UPDATE roles SET role_name = ?, performance_id = ?, actor_id = ?, understudy_id = ? WHERE id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, entity.getRoleName());
+        preparedStatement.setInt(2, entity.getPerformanceId());
+        preparedStatement.setInt(3, entity.getActorId());
+        preparedStatement.setInt(4, entity.getUnderstudyId());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

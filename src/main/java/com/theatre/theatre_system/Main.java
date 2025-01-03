@@ -39,3 +39,5 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
     }
 }
+
+// сделать заливку активной кнопки из панельки действия над таблицей

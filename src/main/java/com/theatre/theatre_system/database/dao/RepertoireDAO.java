@@ -17,9 +17,8 @@ public class RepertoireDAO implements RepertoireRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM repertoires WHERE id = " + id);
     }
 
     @Override
@@ -52,8 +51,17 @@ public class RepertoireDAO implements RepertoireRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Repertoire entity) throws SQLException {
+        query = "UPDATE repertoires SET performance_id = ?, show_date = ?, show_time = ?, is_premiere = ?, period = ?, price = ? WHERE id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, entity.getPerformanceId());
+        preparedStatement.setDate(2, Date.valueOf(entity.getShowDate()));
+        preparedStatement.setTime(3, Time.valueOf(entity.getShowTime()));
+        preparedStatement.setBoolean(4, entity.isPremiere());
+        preparedStatement.setString(5, entity.getPeriod());
+        preparedStatement.setFloat(6, entity.getPrice());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

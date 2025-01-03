@@ -51,16 +51,11 @@ public class PerformancesFormController extends MainController {
     private TextField performanceConductor;
 
     PerformanceDAO performanceDAO = new PerformanceDAO();
+    private String id;
 
     @FXML
     private void initialize() {
 
-    }
-
-    @FXML
-    private void nextStep(ActionEvent actionEvent) {
-        step1Pane.setVisible(false);
-        step2Pane.setVisible(true);
     }
 
     @FXML
@@ -69,9 +64,22 @@ public class PerformancesFormController extends MainController {
         setColumns(getData("performances"));
     }
 
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        performanceTitle.setText(selected[1]);
+        performanceGenre.getSelectionModel().select(selected[2]);
+        performanceAuthor.setText(selected[3]);
+        performanceDirector.setText(selected[4]);
+        performanceArtist.setText(selected[5]);
+        performanceConductor.setText(selected[6]);
+    }
+
     @FXML
-    private void backStep(ActionEvent actionEvent) {
-        step2Pane.setVisible(false);
-        step1Pane.setVisible(true);
+    private void editPerformance(ActionEvent actionEvent) throws SQLException {
+        performanceDAO.update(Integer.parseInt(id), new Performance(performanceTitle.getText().trim(), performanceGenre.getSelectionModel().getSelectedItem().toString(), performanceAuthor.getText().trim(), Integer.parseInt(performanceDirector.getText()), Integer.parseInt(performanceArtist.getText()), Integer.parseInt(performanceConductor.getText())));
+        setColumns(getData("performances"));
     }
 }

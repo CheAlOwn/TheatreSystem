@@ -28,9 +28,9 @@
                       alignment="CENTER_LEFT">
                 <Label text="Дата показа" styleClass="textForms" id="specialText"/>
                 <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                    <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="82"
-                               prefWidth="82"
-                               maxWidth="82"/>
+                    <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="83"
+                               prefWidth="83"
+                               maxWidth="83"/>
                 </Pane>
             </FlowPane>
 
@@ -85,7 +85,7 @@
     </ScrollPane>
 
     <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewRepertoire" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
+    <Hyperlink fx:id="editForRecordHyperlink" onAction="#editRepertoire" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
                text="Изменить"/>
 
 </AnchorPane>

@@ -17,9 +17,8 @@ public class TourDAO implements TourRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM tours WHERE id = " + id);
     }
 
     @Override
@@ -50,8 +49,15 @@ public class TourDAO implements TourRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Tour entity) throws SQLException {
+        query = "UPDATE tours SET employee_id = ?, start_date = ?, end_date = ?, location = ? WHERE id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, entity.getEmployeeId());
+        preparedStatement.setDate(2, Date.valueOf(entity.getStartDate()));
+        preparedStatement.setDate(3, Date.valueOf(entity.getEndDate()));
+        preparedStatement.setString(4, entity.getLocation());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

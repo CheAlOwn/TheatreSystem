@@ -20,9 +20,8 @@ public class MusicianDAO implements MusicianRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM musicians WHERE musician_id = " + id);
     }
 
     @Override
@@ -51,8 +50,12 @@ public class MusicianDAO implements MusicianRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Musician entity) throws SQLException {
+        query = "UPDATE musicians SET instrument = ? WHERE musician_id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, entity.getInstrument());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

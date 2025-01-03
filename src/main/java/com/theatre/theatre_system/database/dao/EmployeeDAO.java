@@ -38,12 +38,8 @@ public class EmployeeDAO implements EmployeeRepository {
         preparedStatement.executeUpdate();
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-        query = "DELETE FROM employees WHERE " + "employee_id=?";
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM employees WHERE employee_id = " + id);
     }
 
     @Override
@@ -100,8 +96,23 @@ public class EmployeeDAO implements EmployeeRepository {
     }
 
     @Override
-    public void update(int id) {
-
+    public void update(int id, Employee entity) throws SQLException {
+        query = "UPDATE employees SET last_name = ?, first_name = ?, middle_name = ?, birthday = ?, gender = ?, hire_year = ?, category = ?, post = ?, salary = ?, phone = ?, address = ?, experience = ?, children_count = ? WHERE employee_id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, entity.getLastName());
+        preparedStatement.setString(2, entity.getFirstName());
+        preparedStatement.setString(3, entity.getMiddleName());
+        preparedStatement.setDate(4, Date.valueOf(entity.getBirthday()));
+        preparedStatement.setString(5, entity.getGender());
+        preparedStatement.setInt(6, entity.getHireYear());
+        preparedStatement.setString(7, entity.getCategory());
+        preparedStatement.setString(8, entity.getPost());
+        preparedStatement.setFloat(9, entity.getSalary());
+        preparedStatement.setString(10, entity.getPhone());
+        preparedStatement.setString(11, entity.getAddress());
+        preparedStatement.setInt(12, entity.getExperience());
+        preparedStatement.setInt(13, entity.getChildrenCount());
+        preparedStatement.executeUpdate();
     }
 
     @Override

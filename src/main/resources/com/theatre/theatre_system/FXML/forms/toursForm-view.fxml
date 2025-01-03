@@ -30,16 +30,16 @@
         <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13" alignment="CENTER_LEFT">
             <Label text="Дата начала" styleClass="textForms"/>
             <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                <TextField fx:id="dateStart" promptText="01.01.1999" styleClass="filterTextField" minWidth="82" prefWidth="82"
-                           maxWidth="82"/>
+                <TextField fx:id="dateStart" promptText="01.01.1999" styleClass="filterTextField" minWidth="83" prefWidth="83"
+                           maxWidth="83"/>
             </Pane>
         </FlowPane>
 
         <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13" alignment="CENTER_LEFT">
             <Label text="Дата окончания" styleClass="textForms"/>
             <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                <TextField fx:id="dateEnd" promptText="30.12.1999" styleClass="filterTextField" minWidth="82" prefWidth="82"
-                           maxWidth="82"/>
+                <TextField fx:id="dateEnd" promptText="30.12.1999" styleClass="filterTextField" minWidth="83" prefWidth="83"
+                           maxWidth="83"/>
             </Pane>
         </FlowPane>
 
@@ -49,6 +49,6 @@
     </VBox>
 
     <Hyperlink fx:id="addForRecordHyperlink" onAction="#addNewTour" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Добавить"/>
-    <Hyperlink fx:id="editForRecordHyperlink" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
+    <Hyperlink fx:id="editForRecordHyperlink" onAction="#editTour" visible="false" styleClass="actionHyperlinks" layoutX="239" layoutY="300" text="Изменить"/>
 
 </AnchorPane>

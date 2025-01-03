@@ -17,9 +17,8 @@ public class PerformanceDAO implements PerformanceRepository {
 
     }
 
-    @Override
-    public void deleteById(int id) throws SQLException {
-
+    public static void deleteById(int id) throws SQLException {
+        MainRecord.connection.createStatement().executeUpdate("DELETE FROM performances WHERE performance_id = " + id);
     }
 
     @Override
@@ -52,8 +51,17 @@ public class PerformanceDAO implements PerformanceRepository {
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, Performance entity) throws SQLException {
+        query = "UPDATE performances SET name = ?, genre = ?, author = ?, director_id = ?, set_designer_id = ?, conductor_id = ? WHERE performance_id = " + id;
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, entity.getName());
+        preparedStatement.setString(2, entity.getGenre());
+        preparedStatement.setString(3, entity.getAuthor());
+        preparedStatement.setInt(4, entity.getDirectorId());
+        preparedStatement.setInt(5, entity.getSetDesignerId());
+        preparedStatement.setInt(6, entity.getConductorId());
 
+        preparedStatement.executeUpdate();
     }
 
     @Override

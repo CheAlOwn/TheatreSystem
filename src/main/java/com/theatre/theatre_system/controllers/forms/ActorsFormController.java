@@ -35,14 +35,33 @@ public class ActorsFormController extends MainController {
     ActorDAO actorDAO = new ActorDAO();
     private Connection connection = MainRecord.connection;
 
+    private String id;
+
     @FXML
     private void initialize() throws SQLException {
-
     }
 
     @FXML
     private void addNewActor(ActionEvent actionEvent) throws SQLException {
         actorDAO.insert(new Actor(Integer.parseInt(employeeIdField.getText()), Float.parseFloat(heightIdField.getText()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
+        setColumns(getData("actors"));
+    }
+
+
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        employeeIdField.setText(selected[1]);
+        employeeIdField.setDisable(true);
+        heightIdField.setText(selected[2]);
+        typeTimbreActorBox.getSelectionModel().select(selected[3]);
+    }
+
+    @FXML
+    private void editActor(ActionEvent actionEvent) throws SQLException {
+        actorDAO.update(Integer.parseInt(id), new Actor(Integer.parseInt(employeeIdField.getText()), Float.parseFloat(heightIdField.getText()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
         setColumns(getData("actors"));
     }
 }

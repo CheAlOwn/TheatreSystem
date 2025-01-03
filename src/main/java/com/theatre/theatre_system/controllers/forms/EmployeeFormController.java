@@ -46,21 +46,6 @@ public class EmployeeFormController extends MainController {
     private Hyperlink editOnStep3;
 
     @FXML
-    private Button backToStep32;
-
-    @FXML
-    private Button backToStep31;
-
-    @FXML
-    private Hyperlink addOnStep41;
-
-    @FXML
-    private Hyperlink editOnStep41;
-
-    @FXML
-    private Button backToStep3;
-
-    @FXML
     private Button backToStep2;
 
     @FXML
@@ -68,9 +53,6 @@ public class EmployeeFormController extends MainController {
 
     @FXML
     private Button nextToStep3;
-
-    @FXML
-    private Button nextToStep4;
 
     @FXML
     private Button nextToStep2;
@@ -131,6 +113,7 @@ public class EmployeeFormController extends MainController {
     ActorDAO actorDAO = new ActorDAO();
     MusicianDAO musicianDAO = new MusicianDAO();
     private Connection connection = MainRecord.connection;
+    private String id;
 
     @FXML
     void initialize() {
@@ -205,11 +188,84 @@ public class EmployeeFormController extends MainController {
         ResultSet rs = connection.createStatement().executeQuery("SELECT currval('employees_employee_id_seq')");
         int employeeId = 0;
         while (rs.next()) employeeId = rs.getInt(1);
-        System.out.println(employeeId);
 
         if (typeEmployeeBox.getSelectionModel().getSelectedItem().toString().equals("Актер"))
             actorDAO.insert(new Actor(employeeId, Float.parseFloat(heightActor.getText().trim()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
         else if (typeEmployeeBox.getSelectionModel().getSelectedItem().toString().equals("Музыкант"))
             musicianDAO.insert(new Musician(employeeId, instrumentBox.getSelectionModel().getSelectedItem().toString()));
     }
+
+    public void load(String[] selected) throws SQLException {
+        addOnStep3.setVisible(false);
+        editOnStep3.setVisible(true);
+
+        id = selected[0];
+        lastName.setText(selected[1]);
+        firstName.setText(selected[2]);
+        middleName.setText(selected[3]);
+        birthday.setText(selected[4]);
+        if (selected[5].equals("М")) {
+            maleRadioButton.setSelected(true);
+        } else {
+            femaleRadioButton.setSelected(true);
+        }
+        hireDate.setText(selected[6]);
+        typeEmployeeBox.getSelectionModel().select(selected[7]);
+        postEmployee.setText(selected[8]);
+        salary.setText(selected[9]);
+        phoneNumberEmployee.setText(selected[10]);
+        StringBuilder address = new StringBuilder();
+        for (int i = 11; i < selected.length - 2; i++) {
+            if (i != selected.length - 3)
+                address.append(selected[i]).append(", ");
+            else address.append(selected[i]);
+        }
+        addressEmployee.setText(address.toString());
+        experience.setText(selected[selected.length - 2]);
+        countKids.setText(selected[selected.length - 1]);
+
+        ResultSet rs;
+        if (typeEmployeeBox.getSelectionModel().getSelectedItem().equals("Актер")) {
+            rs = connection.createStatement().executeQuery("SELECT height, voice_type FROM actors WHERE employee_id=" + selected[0]);
+            while (rs.next()) {
+                heightActor.setText(rs.getString(1));
+                typeTimbreActorBox.getSelectionModel().select(rs.getString(2));
+            }
+        } else if (typeEmployeeBox.getSelectionModel().getSelectedItem().equals("Музыкант")) {
+            rs = connection.createStatement().executeQuery("SELECT (instrument) FROM musicians WHERE employee_id=" + selected[0]);
+            while (rs.next()) {
+                instrumentBox.getSelectionModel().select(rs.getString(1));
+            }
+        }
+    }
+
+    @FXML
+    private void editEmployee(ActionEvent actionEvent) throws SQLException {
+        String gender;
+        if (femaleRadioButton.isSelected()) {
+            gender = "Ж";
+        } else {
+            gender = "М";
+        }
+
+        postEmployee.setEditable(false);
+        employeeDAO.update(Integer.parseInt(id), new Employee(lastName.getText().trim(), firstName.getText().trim(), middleName.getText().trim(), LocalDate.parse(birthday.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), gender.trim(), Integer.parseInt(hireDate.getText().trim()), typeEmployeeBox.getSelectionModel().getSelectedItem().toString().trim(), postEmployee.getText().trim(), Float.parseFloat(salary.getText().trim()), phoneNumberEmployee.getText().trim(), addressEmployee.getText().trim(), Integer.parseInt(experience.getText().trim()), Integer.parseInt(countKids.getText().trim())));
+        setColumns(getData("employees"));
+
+        if (typeEmployeeBox.getSelectionModel().getSelectedItem().toString().equals("Актер")) {
+            int actorId = 0;
+            ResultSet rs = connection.createStatement().executeQuery("SELECT actor_id FROM actors WHERE employee_id = " + id);
+            while (rs.next()) actorId = rs.getInt(1);
+            actorDAO.update(actorId, new Actor(Integer.parseInt(id), Float.parseFloat(heightActor.getText().trim()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
+
+        } else if (typeEmployeeBox.getSelectionModel().getSelectedItem().toString().equals("Музыкант")) {
+            int musicianId = 0;
+            ResultSet rs = connection.createStatement().executeQuery("SELECT musician_id FROM musicians WHERE employee_id = " + id);
+            while(rs.next()) musicianId = rs.getInt(1);
+            musicianDAO.update(musicianId, new Musician(Integer.parseInt(id), instrumentBox.getSelectionModel().getSelectedItem().toString()));
+        }
+    }
+
+
+    // ЕСЛИ ЧЕЛА НЕТ В АКТЕРАХ ИЛИ МУЗЫКАНТАХ ИЛИ ОН ТАМ БЫЛ НО КАТЕГОРИЯ ПОМЕНЯЛАСЬ, ТО В ЗАВИСИМОСТИ ОТ ЭТОГО НУЖНО ДОБАВИТЬ ИЛИ УДАЛИТЬ ЗАПИСЬ
 }

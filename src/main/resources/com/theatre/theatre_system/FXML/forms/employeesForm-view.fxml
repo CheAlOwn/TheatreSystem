@@ -31,9 +31,9 @@
                       alignment="CENTER_LEFT">
                 <Label text="Дата рождения" styleClass="textForms"/>
                 <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                    <TextField fx:id="birthday" promptText="01.01.1999" styleClass="filterTextField" minWidth="82"
-                               prefWidth="82"
-                               maxWidth="82"/>
+                    <TextField fx:id="birthday" promptText="01.01.1999" styleClass="filterTextField" minWidth="83"
+                               prefWidth="83"
+                               maxWidth="83"/>
                 </Pane>
             </FlowPane>
 
@@ -101,11 +101,6 @@
                 </Pane>
             </FlowPane>
         </VBox>
-
-        <!--    <Button fx:id="nextMenuButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"-->
-        <!--            maxWidth="40" layoutX="284" layoutY="20" id="nextMenuButton" styleClass="navButtons" text="Добавить">-->
-        <!--    </Button>-->
-
         <Button fx:id="nextToStep3" onAction="#nextToStep3" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
                 maxHeight="40"
                 maxWidth="40" layoutX="284" layoutY="288" id="nextMenuButton" styleClass="navButtons" disable="true">
@@ -217,7 +212,7 @@
 
         <Hyperlink fx:id="addOnStep3" onAction="#addOnStep3" styleClass="actionHyperlinks" layoutX="239" layoutY="300"
                    text="Добавить"/>
-        <Hyperlink fx:id="editOnStep3" visible="false" styleClass="actionHyperlinks" layoutX="239"
+        <Hyperlink fx:id="editOnStep3" onAction="#editEmployee" visible="false" styleClass="actionHyperlinks" layoutX="239"
                    layoutY="300" text="Изменить"/>
 
         <Button fx:id="backToStep2" onAction="#backToStep2" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"

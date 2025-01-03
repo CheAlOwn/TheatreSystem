@@ -32,6 +32,7 @@ public class RolesFormController extends MainController {
     private TextField idUnderstudy;
 
     RoleDAO roleDAO = new RoleDAO();
+    String id;
 
     @FXML
     private void initialize() {
@@ -41,6 +42,23 @@ public class RolesFormController extends MainController {
     @FXML
     private void addNewRole(ActionEvent actionEvent) throws SQLException {
         roleDAO.insert(new Role(roleName.getText(), Integer.parseInt(idPerformance.getText()), Integer.parseInt(idActor.getText()), Integer.parseInt(idUnderstudy.getText())));
+        setColumns(getData("roles"));
+    }
+
+    public void load(String[] selected) {
+        addForRecordHyperlink.setVisible(false);
+        editForRecordHyperlink.setVisible(true);
+
+        id = selected[0];
+        roleName.setText(selected[1]);
+        idPerformance.setText(selected[2]);
+        idActor.setText(selected[3]);
+        idUnderstudy.setText(selected[4]);
+    }
+
+    @FXML
+    private void editRole(ActionEvent actionEvent) throws SQLException {
+        roleDAO.update(Integer.parseInt(id), new Role(roleName.getText(), Integer.parseInt(idPerformance.getText()), Integer.parseInt(idActor.getText()), Integer.parseInt(idUnderstudy.getText())));
         setColumns(getData("roles"));
     }
 }
