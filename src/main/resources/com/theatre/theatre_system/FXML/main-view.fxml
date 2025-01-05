@@ -81,7 +81,8 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="editObjectButton"  onAction="#editThisRecord" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+        <Button fx:id="editObjectButton" onAction="#editThisRecord" styleClass="actionTableButtons" minHeight="40"
+                minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
             <graphic>
                 <ImageView>
@@ -89,7 +90,8 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="removeObjectButton" onAction="#deleteThisRecord" styleClass="actionTableButtons" minHeight="40" minWidth="40" prefWidth="40"
+        <Button fx:id="removeObjectButton" onAction="#deleteThisRecord" styleClass="actionTableButtons" minHeight="40"
+                minWidth="40" prefWidth="40"
                 prefHeight="40" maxWidth="40" maxHeight="40" alignment="CENTER">
             <graphic>
                 <ImageView>
@@ -102,14 +104,20 @@
     <!--    СТРОКА ПОИСКА   -->
     <HBox visible="false" fx:id="searchBox" spacing="12" layoutY="22" layoutX="227">
         <ComboBox fx:id="parametersBox" minWidth="136" maxWidth="136" maxHeight="36"
-                  minHeight="36"/>
-        <TextField fx:id="searchTextField" styleClass="formsTextField" promptText="Поиск" minWidth="340" maxWidth="340"
+                  minHeight="36" promptText="Параметр"/>
+        <TextField disable="true" fx:id="searchTextField" styleClass="formsTextField" promptText="Поиск" minWidth="340" maxWidth="340"
                    maxHeight="36" minHeight="36"/>
     </HBox>
 
 
-    <!--    ПАНЕЛЬ МЕНЮ      -->
     <Rectangle fx:id="overlayPane" visible="false" style="-fx-fill: rgba(0, 0, 0, 0.5);" width="1000" height="700"/>
+
+    <HBox fx:id="importantMessage" style="-fx-background-color: #b8e6b9; -fx-background-radius:12px; -fx-border-color: #242424; -fx-border-radius:12px; -fx-border-width:1px;"
+    minHeight="36" maxWidth="340" maxHeight="36" minWidth="340" layoutX="330" layoutY="20" alignment="CENTER" visible="false">
+        <Label fx:id="message" text="Все поля обязательны для заполнения!" styleClass="mainText"/>
+    </HBox>
+
+    <!--    ПАНЕЛЬ МЕНЮ      -->
 
     <AnchorPane fx:id="menuPane" visible="false" id="menuPane" maxWidth="278" maxHeight="700" minHeight="700"
                 minWidth="278"
@@ -182,7 +190,8 @@
                 prefHeight="428" prefWidth="344"
                 style="-fx-background-color: #fff; -fx-background-radius: 24px;" layoutX="328" layoutY="136">
         <Pane maxWidth="344" minWidth="344" prefWidth="344" maxHeight="80" minHeight="80" prefHeight="80">
-            <Button fx:id="closeFormButton" onAction="#closeForm" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40" maxHeight="40"
+            <Button fx:id="closeFormButton" onAction="#closeForm" minWidth="40" minHeight="40" prefWidth="40"
+                    prefHeight="40" maxHeight="40"
                     maxWidth="40" layoutX="284" layoutY="20" id="closeMenuButton" styleClass="navButtons">
                 <graphic>
                     <ImageView>
@@ -194,8 +203,8 @@
             <Label text="Форма" styleClass="header2" layoutY="23" layoutX="133"/>
         </Pane>
 
-<!--        НУЖНА АНИМА-->
-        <AnchorPane fx:id="form" minHeight="348" maxHeight="348" prefHeight="348" minWidth="344" maxWidth="344" prefWidth="344" layoutY="82">
+        <AnchorPane fx:id="form" minHeight="348" maxHeight="348" prefHeight="348" minWidth="344" maxWidth="344"
+                    prefWidth="344" layoutY="82">
 
         </AnchorPane>
     </AnchorPane>

@@ -50,11 +50,11 @@
             <Label text="Дата продажи" styleClass="text1"/>
             <HBox spacing="20">
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField fx:id="startDate" promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="startDate" promptText="С 1999-01-01" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField fx:id="endDate" promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="endDate" promptText="По 1999-12-31" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
             </HBox>

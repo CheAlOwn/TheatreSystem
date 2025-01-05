@@ -30,7 +30,7 @@
         <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13" alignment="CENTER_LEFT">
             <Label text="Дата начала" styleClass="textForms"/>
             <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                <TextField fx:id="dateStart" promptText="01.01.1999" styleClass="filterTextField" minWidth="83" prefWidth="83"
+                <TextField fx:id="dateStart" promptText="1999-01-01" styleClass="filterTextField" minWidth="83" prefWidth="83"
                            maxWidth="83"/>
             </Pane>
         </FlowPane>
@@ -38,7 +38,7 @@
         <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13" alignment="CENTER_LEFT">
             <Label text="Дата окончания" styleClass="textForms"/>
             <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                <TextField fx:id="dateEnd" promptText="30.12.1999" styleClass="filterTextField" minWidth="83" prefWidth="83"
+                <TextField fx:id="dateEnd" promptText="1999-12-31" styleClass="filterTextField" minWidth="83" prefWidth="83"
                            maxWidth="83"/>
             </Pane>
         </FlowPane>

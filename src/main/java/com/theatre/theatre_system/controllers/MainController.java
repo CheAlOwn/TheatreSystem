@@ -32,6 +32,12 @@ import java.util.logging.Logger;
 
 public class MainController {
     @FXML
+    private HBox importantMessage;
+
+    @FXML
+    private Label message;
+
+    @FXML
     private Button closeFormButton;
 
     @FXML
@@ -170,14 +176,15 @@ public class MainController {
         searchBox.setVisible(false);
         searchBox.setOpacity(0);
 
+        parametersBox.setOnAction(event -> searchTextField.setDisable(false));
+
         Search search = new Search();
         searchTextField.textProperty().addListener(text -> {
             try {
-                if (!Objects.equals(parametersBox.getSelectionModel().getSelectedItem().toString(), "Параметр"))
+                if (searchTextField.getText().isEmpty())
+                    setColumns(getData(currentTable));
+                else
                     setColumns(search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText()));
-                else {
-                    setColumns(connection.createStatement().executeQuery("SELECT * FROM " + currentTable));
-                }
             } catch (SQLException e) {
                 throw new IllegalArgumentException(e);
             }
@@ -289,6 +296,7 @@ public class MainController {
     }
 
     private void switchTables(Hyperlink hyperlink, String table) throws SQLException {
+
         // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
         if (currentHyperlink != null) {
             currentHyperlink.setStyle("-fx-opacity: 0.35;");
@@ -308,48 +316,61 @@ public class MainController {
     private void getActorsTable(ActionEvent actionEvent) throws SQLException {
         switchTables(actorsHyperlink, "actors");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getEmployeesTable(ActionEvent actionEvent) throws SQLException {
         switchTables(employeesHyperlink, "employees");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getMusiciansTable(ActionEvent actionEvent) throws SQLException {
         switchTables(musiciansHyperlink, "musicians");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getPerformancesTable(ActionEvent actionEvent) throws SQLException {
         switchTables(performancesHyperlink, "performances");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getRepertoiresTable(ActionEvent actionEvent) throws SQLException {
         switchTables(repertoireHyperlink, "repertoires");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getRolesTable(ActionEvent actionEvent) throws SQLException {
         switchTables(roleHyperlink, "roles");
         switchAvailableFilters(false);
+        setDisableSearchField();
     }
 
     @FXML
     private void getTicketsTable(ActionEvent actionEvent) throws SQLException {
         switchTables(ticketsHyperlink, "tickets");
         switchAvailableFilters(true);
+        setDisableSearchField();
     }
 
     @FXML
     private void getToursTable(ActionEvent actionEvent) throws SQLException {
         switchTables(toursHyperlink, "tours");
         switchAvailableFilters(true);
+        setDisableSearchField();
+    }
+
+    private void setDisableSearchField() {
+        searchTextField.setDisable(true);
+        searchTextField.clear();
     }
 
     private void switchAvailableFilters(boolean available) {
@@ -363,12 +384,22 @@ public class MainController {
 
     @FXML
     private void addNewRecord(ActionEvent actionEvent) throws IOException {
-        // устанавливаем видимость и прозрачность затемняющей панели
-        overlayPane.setVisible(true);
-        overlayPane.setOpacity(0.5);
-
         // делаем видимой панель с формами
         formsPane.setVisible(true);
+
+        // выводим сообщение об обязательных полях
+        importantMessage.setVisible(true);
+
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), importantMessage);
+        slideIn.setToY(0);
+
+        overlayPane.setVisible(true);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(300), overlayPane);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+
+        slideIn.play();
+        fadeIn.play();
 
 
         switch (currentHyperlink.getText()) {
@@ -386,9 +417,18 @@ public class MainController {
 
     @FXML
     private void closeForm(ActionEvent actionEvent) {
-        overlayPane.setVisible(false);
-        overlayPane.setOpacity(1);
         formsPane.setVisible(false);
+        importantMessage.setVisible(false);
+        TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), importantMessage);
+        slideOut.setToY(-40);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), overlayPane);
+        fadeOut.setFromValue(1);
+        fadeOut.setToValue(0);
+        fadeOut.setOnFinished(event -> overlayPane.setVisible(false));
+
+        slideOut.play();
+        fadeOut.play();
     }
 
     private void showSearchBox() {
@@ -440,19 +480,18 @@ public class MainController {
         for (int i = 1; i <= columnCount; i++) {
             parametersBox.getItems().add(rsMetaData.getColumnLabel(i));
         }
-
-        parametersBox.getItems().addFirst("Параметр");
-        parametersBox.getSelectionModel().selectFirst();
     }
 
     //TODO: доделать
     @FXML
     private void toggleSearch(ActionEvent actionEvent) {
-        if (isSearchVisible && searchTextField.getText().isBlank()) {
+        if (isSearchVisible && searchTextField.getText().isEmpty()) {
             hideSearchBox(); // Если открыто - скрыть
+            tableName.setVisible(true);
             isSearchVisible = false;
         } else if (!isSearchVisible) {
             showSearchBox();
+            tableName.setVisible(false);
             isSearchVisible = true;
         }
     }
@@ -499,6 +538,20 @@ public class MainController {
 
             // делаем видимой панель с формами
             formsPane.setVisible(true);
+
+            // выводим сообщение об обязательных полях
+            importantMessage.setVisible(true);
+
+            TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), importantMessage);
+            slideIn.setToY(0);
+
+            overlayPane.setVisible(true);
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), overlayPane);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+
+            slideIn.play();
+            fadeIn.play();
 
             switch (currentHyperlink.getText()) {
                 case "Актеры":

@@ -31,7 +31,7 @@
                       alignment="CENTER_LEFT">
                 <Label text="Дата рождения" styleClass="textForms"/>
                 <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                    <TextField fx:id="birthday" promptText="01.01.1999" styleClass="filterTextField" minWidth="83"
+                    <TextField fx:id="birthday" promptText="1999-01-01" styleClass="filterTextField" minWidth="83"
                                prefWidth="83"
                                maxWidth="83"/>
                 </Pane>

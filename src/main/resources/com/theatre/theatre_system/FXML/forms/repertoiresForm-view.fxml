@@ -28,7 +28,7 @@
                       alignment="CENTER_LEFT">
                 <Label text="Дата показа" styleClass="textForms" id="specialText"/>
                 <Pane styleClass="filterTextFieldPane" minWidth="86" prefWidth="86" maxWidth="86">
-                    <TextField fx:id="dateShow" promptText="01.01.1999" styleClass="filterTextField" minWidth="83"
+                    <TextField fx:id="dateShow" promptText="1999-01-01" styleClass="filterTextField" minWidth="83"
                                prefWidth="83"
                                maxWidth="83"/>
                 </Pane>
