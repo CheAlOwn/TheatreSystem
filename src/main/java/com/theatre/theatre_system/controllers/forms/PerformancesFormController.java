@@ -61,7 +61,7 @@ public class PerformancesFormController extends MainController {
     @FXML
     private void addNewPerformance(ActionEvent actionEvent) throws SQLException {
         performanceDAO.insert(new Performance(performanceTitle.getText().trim(), performanceGenre.getSelectionModel().getSelectedItem().toString(), performanceAuthor.getText().trim(), Integer.parseInt(performanceDirector.getText()), Integer.parseInt(performanceArtist.getText()), Integer.parseInt(performanceConductor.getText())));
-        setColumns(getData("performances"));
+        setColumns(performanceDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -80,6 +80,6 @@ public class PerformancesFormController extends MainController {
     @FXML
     private void editPerformance(ActionEvent actionEvent) throws SQLException {
         performanceDAO.update(Integer.parseInt(id), new Performance(performanceTitle.getText().trim(), performanceGenre.getSelectionModel().getSelectedItem().toString(), performanceAuthor.getText().trim(), Integer.parseInt(performanceDirector.getText()), Integer.parseInt(performanceArtist.getText()), Integer.parseInt(performanceConductor.getText())));
-        setColumns(getData("performances"));
+        setColumns(performanceDAO.findAll());
     }
 }

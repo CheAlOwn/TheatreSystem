@@ -62,7 +62,7 @@ public class TicketsFormController extends MainController {
             date = LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
         ticketDAO.insert(new Ticket(Integer.parseInt(idRepertoire.getText()), idSeat.getText(), Float.parseFloat(price.getText()), ticketSellStatus.getSelectionModel().getSelectedItem().toString(), date));
-        setColumns(getData("tickets"));
+        setColumns(ticketDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -86,6 +86,6 @@ public class TicketsFormController extends MainController {
             date = LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
         ticketDAO.update(Integer.parseInt(id), new Ticket(Integer.parseInt(idRepertoire.getText()), idSeat.getText(), Float.parseFloat(price.getText()), ticketSellStatus.getSelectionModel().getSelectedItem().toString(), date));
-        setColumns(getData("tickets"));
+        setColumns(ticketDAO.findAll());
     }
 }

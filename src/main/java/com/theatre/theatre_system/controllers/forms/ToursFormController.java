@@ -44,7 +44,7 @@ public class ToursFormController extends MainController {
     @FXML
     public void addNewTour(ActionEvent actionEvent) throws SQLException {
         tourDAO.insert(new Tour(Integer.parseInt(idEmployee.getText()), LocalDate.parse(dateStart.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalDate.parse(dateEnd.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), place.getText()));
-        setColumns(getData("tours"));
+        setColumns(tourDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -61,6 +61,6 @@ public class ToursFormController extends MainController {
     @FXML
     private void editTour(ActionEvent actionEvent) throws SQLException {
         tourDAO.update(Integer.parseInt(id), new Tour(Integer.parseInt(idEmployee.getText()), LocalDate.parse(dateStart.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalDate.parse(dateEnd.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), place.getText()));
-        setColumns(getData("tours"));
+        setColumns(tourDAO.findAll());
     }
 }

@@ -12,28 +12,8 @@ public class PerformanceDAO implements PerformanceRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Performance entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM performances WHERE performance_id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Performance> findAll() {
-        return null;
-    }
-
-    @Override
-    public Performance findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -65,7 +45,14 @@ public class PerformanceDAO implements PerformanceRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Performance> entities) {
+    public ResultSet findByParameters(String... parameters) {
 
+        return null;
     }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM performances;");
+    }
+
 }

@@ -9,40 +9,71 @@
             prefHeight="620" prefWidth="334" stylesheets="@../../CSS/mainStyle.css">
 
     <VBox layoutX="20" spacing="32">
-        <VBox spacing="16">
-            <Label text="Тип" styleClass="text1"/>
-            <VBox spacing="12">
-                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
-                          hgap="8">
-                    <RadioButton fx:id="adultsRadioButton"/>
-                    <Label text="Для взрослых" styleClass="mainText" alignment="CENTER"/>
-                </FlowPane>
-
-                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
-                          hgap="8">
-                    <RadioButton fx:id="youngerRadioButton"/>
-                    <Label text="Для молодежи" styleClass="mainText" alignment="CENTER"/>
-                </FlowPane>
-
-                <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20" prefHeight="20"
-                          hgap="8">
-                    <RadioButton fx:id="kidsRadioButton"/>
-                    <Label text="Для детей" styleClass="mainText" alignment="CENTER"/>
-                </FlowPane>
-            </VBox>
-        </VBox>
-
         <VBox layoutY="88" layoutX="20" spacing="28">
             <VBox spacing="16">
-                <Label text="Инструменты" styleClass="text1"/>
+                <Label text="Жанры" styleClass="text1"/>
                 <ScrollPane maxHeight="156" minHeight="156" prefHeight="156" maxWidth="294" minWidth="294"
                             prefWidth="294">
                     <VBox spacing="12">
                         <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
                                   prefHeight="20"
                                   hgap="8">
-                            <CheckBox/>
-                            <Label text="Example" styleClass="mainText"/>
+                            <CheckBox fx:id="ballet" accessibleText="Балет"/>
+                            <Label text="Балет" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="vaudeville" accessibleText="Водевиль"/>
+                            <Label text="Водевиль" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="drama" accessibleText="Драма"/>
+                            <Label text="Драма" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="cabaret" accessibleText="Кабаре"/>
+                            <Label text="Кабаре" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="comedy" accessibleText="Комедия"/>
+                            <Label text="Комедия" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="musical" accessibleText="Мюзикл"/>
+                            <Label text="Мюзикл" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="opera" accessibleText="Опера"/>
+                            <Label text="Опера" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="operetta" accessibleText="Оперетта"/>
+                            <Label text="Оперетта" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="tragedy" accessibleText="Трагедия"/>
+                            <Label text="Трагедия" styleClass="mainText"/>
+                        </FlowPane>
+                        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                                  prefHeight="20"
+                                  hgap="8">
+                            <CheckBox fx:id="farce" accessibleText="Фарс"/>
+                            <Label text="Фарс" styleClass="mainText"/>
                         </FlowPane>
                     </VBox>
                 </ScrollPane>

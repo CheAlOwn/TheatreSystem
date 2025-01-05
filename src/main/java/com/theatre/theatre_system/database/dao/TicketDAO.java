@@ -12,28 +12,8 @@ public class TicketDAO implements TicketRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Ticket entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM tickets WHERE ticket_id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Ticket> findAll() {
-        return null;
-    }
-
-    @Override
-    public Ticket findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -81,7 +61,13 @@ public class TicketDAO implements TicketRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Ticket> entities) {
+    public ResultSet findByParameters(String... parameters) {
 
+        return null;
+    }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM tickets;");
     }
 }

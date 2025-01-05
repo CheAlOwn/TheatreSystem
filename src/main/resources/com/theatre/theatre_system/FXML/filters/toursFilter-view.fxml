@@ -13,11 +13,11 @@
             <Label text="Дата начала гастролей" styleClass="text1"/>
             <HBox spacing="20">
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="startDateFrom" promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="startDateTo" promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
             </HBox>
@@ -27,11 +27,11 @@
             <Label text="Дата окончания гастролей" styleClass="text1"/>
             <HBox spacing="20">
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="endDateFrom" promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="endDateTo" promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
             </HBox>

@@ -44,7 +44,7 @@ public class ActorsFormController extends MainController {
     @FXML
     private void addNewActor(ActionEvent actionEvent) throws SQLException {
         actorDAO.insert(new Actor(Integer.parseInt(employeeIdField.getText()), Float.parseFloat(heightIdField.getText()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(getData("actors"));
+        setColumns(actorDAO.findAll());
     }
 
 
@@ -62,6 +62,6 @@ public class ActorsFormController extends MainController {
     @FXML
     private void editActor(ActionEvent actionEvent) throws SQLException {
         actorDAO.update(Integer.parseInt(id), new Actor(Integer.parseInt(employeeIdField.getText()), Float.parseFloat(heightIdField.getText()), typeTimbreActorBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(getData("actors"));
+        setColumns(actorDAO.findAll());
     }
 }

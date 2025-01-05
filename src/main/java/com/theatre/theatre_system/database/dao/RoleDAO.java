@@ -12,28 +12,8 @@ public class RoleDAO implements RoleRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Role entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM roles WHERE id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Role> findAll() {
-        return null;
-    }
-
-    @Override
-    public Role findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -61,7 +41,14 @@ public class RoleDAO implements RoleRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Role> entities) {
+    public ResultSet findByParameters(String... parameters) {
 
+        return null;
     }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM roles;");
+    }
+
 }

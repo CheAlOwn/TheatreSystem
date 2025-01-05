@@ -56,7 +56,7 @@ public class RepertoiresFormController extends MainController {
     @FXML
     private void addNewRepertoire(ActionEvent actionEvent) throws SQLException {
         repertoireDAO.insert(new Repertoire(Integer.parseInt(idPerformance.getText()), LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalTime.parse(hours.getText() + ":" + minutes.getText()), premier.isSelected(), startShow.getText() + " - " + endShow.getText(), Float.parseFloat(price.getText())));
-        setColumns(getData("repertoires"));
+        setColumns(repertoireDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -79,6 +79,6 @@ public class RepertoiresFormController extends MainController {
     @FXML
     private void editRepertoire(ActionEvent actionEvent) throws SQLException {
         repertoireDAO.update(Integer.parseInt(id), new Repertoire(Integer.parseInt(idPerformance.getText()), LocalDate.parse(dateShow.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalTime.parse(hours.getText() + ":" + minutes.getText()), premier.isSelected(), startShow.getText() + " - " + endShow.getText(), Float.parseFloat(price.getText())));
-        setColumns(getData("repertoires"));
+        setColumns(repertoireDAO.findAll());
     }
 }

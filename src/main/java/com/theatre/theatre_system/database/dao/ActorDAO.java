@@ -12,28 +12,8 @@ public class ActorDAO implements ActorRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Actor entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM actors WHERE actor_id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Actor> findAll() {
-        return null;
-    }
-
-    @Override
-    public Actor findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -58,7 +38,14 @@ public class ActorDAO implements ActorRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Actor> entities) {
+    public ResultSet findByParameters(String... parameters) {
+
+        return null;
+    }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM actors;");
 
     }
 }

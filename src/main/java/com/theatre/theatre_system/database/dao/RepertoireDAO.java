@@ -12,28 +12,8 @@ public class RepertoireDAO implements RepertoireRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Repertoire entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM repertoires WHERE id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Repertoire> findAll() {
-        return null;
-    }
-
-    @Override
-    public Repertoire findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -65,7 +45,14 @@ public class RepertoireDAO implements RepertoireRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Repertoire> entities) {
+    public ResultSet findByParameters(String... parameters) {
 
+        return null;
     }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM repertoires;");
+    }
+
 }

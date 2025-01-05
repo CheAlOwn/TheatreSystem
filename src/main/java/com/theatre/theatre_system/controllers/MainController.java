@@ -170,8 +170,6 @@ public class MainController {
         searchBox.setVisible(false);
         searchBox.setOpacity(0);
 
-
-        //TODO: сначала сделать добавление новых данных
         Search search = new Search();
         searchTextField.textProperty().addListener(text -> {
             try {
@@ -210,10 +208,6 @@ public class MainController {
         }
 
         MainRecord.table.setItems(rows);
-//        tableOutData.getSelectionModel().selectedItemProperty().addListener(event -> {
-//            addRecordPane.setVisible(false);
-//            actionsPane.setVisible(true);
-//        });
     }
 
     private TableColumn<ObservableList<Object>, Object> getObservableListObjectTableColumn(String columnName, int columnIndex, int i) {
@@ -230,10 +224,12 @@ public class MainController {
         return column;
     }
 
-    public ResultSet getData(String table) throws SQLException {
-        String query = "SELECT * FROM " + table + ";";
-        Statement statement = connection.createStatement();
-        return statement.executeQuery(query);
+    private ResultSet getData(String table) throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM " + table + ";");
+    }
+
+    public ResultSet getDataByQuery(String query) throws SQLException {
+        return connection.createStatement().executeQuery(query);
     }
 
     private void setEffects() {

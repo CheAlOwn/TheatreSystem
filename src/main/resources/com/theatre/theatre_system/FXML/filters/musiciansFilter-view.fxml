@@ -16,8 +16,68 @@
                     <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
                               prefHeight="20"
                               hgap="8">
-                        <CheckBox/>
-                        <Label text="Example" styleClass="mainText"/>
+                        <CheckBox fx:id="aGuitar" accessibleText="Акустическая гитара"/>
+                        <Label text="Акустическая гитара" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="cello" accessibleText="Виолончель"/>
+                        <Label text="Виолончель" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="guitar" accessibleText="Гитара"/>
+                        <Label text="Гитара" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="clarinet" accessibleText="Кларнет"/>
+                        <Label text="Кларнет" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="organ" accessibleText="Орган"/>
+                        <Label text="Орган" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="piano" accessibleText="Пианино"/>
+                        <Label text="Пианино" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="violin" accessibleText="Скрипка"/>
+                        <Label text="Скрипка" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="trombone" accessibleText="Тромбон"/>
+                        <Label text="Тромбон" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="tube" accessibleText="Трубка"/>
+                        <Label text="Трубка" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="flute" accessibleText="Флейта"/>
+                        <Label text="Флейта" styleClass="mainText"/>
+                    </FlowPane>
+                    <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
+                              prefHeight="20"
+                              hgap="8">
+                        <CheckBox fx:id="fPiano" accessibleText="Фортепиано"/>
+                        <Label text="Фортепиано" styleClass="mainText"/>
                     </FlowPane>
                 </VBox>
             </ScrollPane>
@@ -29,19 +89,19 @@
             <HBox spacing="20">
                 <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
                           hgap="8">
-                    <RadioButton fx:id="allRadioButton"/>
+                    <RadioButton fx:id="allRadioButton" accessibleText="Все"/>
                     <Label text="Все" styleClass="mainText" alignment="CENTER"/>
                 </FlowPane>
 
                 <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
                           hgap="8">
-                    <RadioButton fx:id="femaleRadioButton"/>
+                    <RadioButton fx:id="femaleRadioButton" accessibleText="Ж"/>
                     <Label text="Женщина" styleClass="mainText" alignment="CENTER"/>
                 </FlowPane>
 
                 <FlowPane orientation="VERTICAL" alignment="CENTER" maxHeight="20" minHeight="20" prefHeight="20"
                           hgap="8">
-                    <RadioButton fx:id="maleRadioButton"/>
+                    <RadioButton fx:id="maleRadioButton" accessibleText="М"/>
                     <Label text="Мужчина" styleClass="mainText" alignment="CENTER"/>
                 </FlowPane>
             </HBox>

@@ -16,11 +16,15 @@ public class Search {
         String query;
 
         if (!value.isBlank()) {
-            switch (type(table, parameter)) {
-                case "serial", "numeric", "int4" ->
+            String type = type(table, parameter);
+
+            switch (type) {
+                case "serial", "numeric", "int4", "bool" ->
                         query = SELECT + table + " WHERE " + parameter + " = " + value + ";";
                 case "varchar", "bpchar", "text" ->
                         query = SELECT + table + " WHERE " + parameter + " LIKE '%" + value + "%';";
+                case "date", "timestamp", "timestamp without time zone", "time", "time without time zone" ->
+                        query = SELECT + table + " WHERE " + parameter + " = '" + value + "';";
                 default -> query = null;
             }
         } else {
@@ -28,7 +32,6 @@ public class Search {
         }
 
         return connection.createStatement().executeQuery(query);
-
     }
 
     private String type(String table, String column) throws SQLException {
@@ -48,11 +51,10 @@ public class Search {
 }
 
 
-//    • Сделать поиск по таблицам. 90/100
-//    • Сделать отображение форм предактирование и добавления новых данных (также добавить кнопку назад на некоторые формы) 20/100
-//    • Сделать фильтры (также сделать очистку) 30/100
-//    • Видоизменить панельку добавления редактирования и изменения.    
+//    • Сделать отображение форм предактирование и добавления новых данных (также добавить кнопку назад на некоторые формы) 99/100
+//    • Сделать фильтры (также сделать очистку) 99/100
 //    • Сделать дизайн комбобокса
+//      сделать scrollbar в scrollarea, чтобы пользователи понимали, что есть возможность прокрутки в некоторых местах
 //
 //
 //Не работет на параметре “Параметр” и на birthday, н авкладке hire-year когда стираешь полностью строку. В общем е работает поиск по датам и времени

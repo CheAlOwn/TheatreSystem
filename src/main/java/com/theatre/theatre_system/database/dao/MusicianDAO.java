@@ -15,28 +15,8 @@ public class MusicianDAO implements MusicianRepository {
     ResultSet rs;
     String query;
 
-    @Override
-    public void delete(Musician entity) throws SQLException {
-
-    }
-
     public static void deleteById(int id) throws SQLException {
         MainRecord.connection.createStatement().executeUpdate("DELETE FROM musicians WHERE musician_id = " + id);
-    }
-
-    @Override
-    public boolean existsById(int id) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public Iterable<Musician> findAll() {
-        return null;
-    }
-
-    @Override
-    public Musician findById(int id) throws SQLException {
-        return null;
     }
 
     @Override
@@ -59,7 +39,14 @@ public class MusicianDAO implements MusicianRepository {
     }
 
     @Override
-    public void saveAll(Iterable<Musician> entities) {
+    public ResultSet findByParameters(String... parameters) {
 
+        return null;
     }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        return connection.createStatement().executeQuery("SELECT * FROM musicians;");
+    }
+
 }

@@ -11,14 +11,14 @@
     <VBox layoutX="20" spacing="28">
         <VBox spacing="16">
             <Label text="Исходная цена билетов" styleClass="text1"/>
-            <HBox spacing="20">
-                <Pane styleClass="filterTextFieldPane" minWidth="88" prefWidth="88" maxWidth="88">
-                    <TextField promptText="От 150₽" styleClass="filterTextField" minWidth="84" prefWidth="84"
-                               maxWidth="84"/>
+            <HBox spacing="24">
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField fx:id="startPrice" promptText="От 150.00 ₽" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
                 </Pane>
-                <Pane styleClass="filterTextFieldPane" minWidth="88" prefWidth="88" maxWidth="88">
-                    <TextField promptText="До 10000₽" styleClass="filterTextField" minWidth="84" prefWidth="84"
-                               maxWidth="84"/>
+                <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
+                    <TextField fx:id="endPrice" promptText="До 10000.00 ₽" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                               maxWidth="106"/>
                 </Pane>
             </HBox>
         </VBox>
@@ -27,22 +27,22 @@
             <Label text="Дата показа" styleClass="text1"/>
             <HBox spacing="20">
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="startDate" promptText="С 01.01.1999" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
                 <Pane styleClass="filterTextFieldPane" minWidth="110" prefWidth="110" maxWidth="110">
-                    <TextField promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
+                    <TextField fx:id="endDate" promptText="По 30.12.2024" styleClass="filterTextField" minWidth="106" prefWidth="106"
                                maxWidth="106"/>
                 </Pane>
             </HBox>
         </VBox>
 
-        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"
-                  prefHeight="20"
-                  hgap="8">
-            <CheckBox/>
-            <Label text="Премьера" styleClass="mainText"/>
-        </FlowPane>
+<!--        <FlowPane orientation="VERTICAL" alignment="CENTER_LEFT" maxHeight="20" minHeight="20"-->
+<!--                  prefHeight="20"-->
+<!--                  hgap="8">-->
+<!--            <CheckBox fx:id="isPremier"/>-->
+<!--            <Label text="Премьера" styleClass="mainText"/>-->
+<!--        </FlowPane>-->
 
     </VBox>
 

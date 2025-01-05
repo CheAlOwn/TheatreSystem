@@ -42,7 +42,7 @@ public class RolesFormController extends MainController {
     @FXML
     private void addNewRole(ActionEvent actionEvent) throws SQLException {
         roleDAO.insert(new Role(roleName.getText(), Integer.parseInt(idPerformance.getText()), Integer.parseInt(idActor.getText()), Integer.parseInt(idUnderstudy.getText())));
-        setColumns(getData("roles"));
+        setColumns(roleDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -59,6 +59,6 @@ public class RolesFormController extends MainController {
     @FXML
     private void editRole(ActionEvent actionEvent) throws SQLException {
         roleDAO.update(Integer.parseInt(id), new Role(roleName.getText(), Integer.parseInt(idPerformance.getText()), Integer.parseInt(idActor.getText()), Integer.parseInt(idUnderstudy.getText())));
-        setColumns(getData("roles"));
+        setColumns(roleDAO.findAll());
     }
 }

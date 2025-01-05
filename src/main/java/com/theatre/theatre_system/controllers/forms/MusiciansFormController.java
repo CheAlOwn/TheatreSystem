@@ -43,7 +43,7 @@ public class MusiciansFormController extends MainController {
     @FXML
     private void addNewMusician(ActionEvent actionEvent) throws SQLException {
         musicianDAO.insert(new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(getData("musicians"));
+        setColumns(musicianDAO.findAll());
     }
 
     public void load(String[] selected) {
@@ -60,6 +60,10 @@ public class MusiciansFormController extends MainController {
     @FXML
     private void editMusician(ActionEvent actionEvent) throws SQLException {
         musicianDAO.update(Integer.parseInt(id), new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(getData("musicians"));
+        setColumns(musicianDAO.findAll());
+    }
+
+    public ComboBox getInstrumentBox() {
+        return instrumentBox;
     }
 }

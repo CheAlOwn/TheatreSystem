@@ -76,9 +76,46 @@
 }
 
 .scroll-pane {
-    -fx-hbar-policy: NEVER; 
-    -fx-vbar-policy: NEVER;
+    -fx-hbar-policy: NEVER;
     -fx-background-color: transparent;
+}
+
+/* Убираем стрелки прокрутки */
+.scroll-pane .scroll-bar:vertical .increment-button,
+.scroll-pane .scroll-bar:horizontal .increment-button {
+    -fx-fill: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane .scroll-bar:vertical .decrement-button,
+.scroll-pane .scroll-bar:horizontal .decrement-button {
+    -fx-fill: transparent;
+    -fx-padding: 0;
+}
+
+/* Настройка внешнего вида track (фона скроллбара) */
+.scroll-pane .scroll-bar:vertical .track,
+.scroll-pane .scroll-bar:horizontal .track {
+    -fx-background-color: #FFF;
+    -fx-background-radius: 5px;
+}
+
+/* Настройка внешнего вида thumb (ползунка) */
+.scroll-pane .scroll-bar:vertical .thumb,
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 5px;
+}
+
+/* Настройка внешнего вида thumb при наведении */
+.scroll-pane .scroll-bar:vertical .thumb:hover,
+.scroll-pane .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Установка ширины для вертикального скроллбара */
+.scroll-pane .scroll-bar:vertical {
+    -fx-pref-width: 9px;
 }
 
 .scroll-pane .viewport {
@@ -97,6 +134,12 @@
     -fx-border-color: #CACFD6;
     -fx-border-width: 2px;
     -fx-border-radius: 24px;
+}
+
+.chips.active {
+    -fx-background-color: #CACFD6; /* Активное состояние */
+    -fx-text-fill: white;
+    -fx-background-radius: 24px;
 }
 
 
