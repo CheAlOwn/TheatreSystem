@@ -1,5 +1,6 @@
 package com.theatre.theatre_system.controllers;
 
+import com.theatre.theatre_system.Main;
 import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.controllers.forms.*;
 import com.theatre.theatre_system.database.dao.*;
@@ -27,6 +28,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -134,8 +136,11 @@ public class MainController {
     private Button removeObjectButton;
 
     private final Connection connection = MainRecord.connection;
+    private List<Hyperlink> menuHyperlinks = new ArrayList<>();
+    private List<String> tableNames = new ArrayList<>();
     private Hyperlink currentHyperlink;
     private String currentTable;
+    private boolean isAllowed = true;
 
     final double[] offsetX = {0}, offsetY = {0};
 
@@ -146,14 +151,18 @@ public class MainController {
 
     @FXML
     void initialize() throws SQLException {
+        menuHyperlinks.addAll(List.of(new Hyperlink("Актеры"), new Hyperlink("Работники"), new Hyperlink("Музыканты"), new Hyperlink("Спектакли"), new Hyperlink("Репертуары"), new Hyperlink("Роли"), new Hyperlink("Билеты"), new Hyperlink("Гастроли")));
+        tableNames.addAll(List.of("actors", "employees", "musicians", "performances", "repertoires", "roles", "tickets", "tours"));
+        setSettingsForHyperlinks(menuHyperlinks);
+
         MainRecord.form = form;
         MainRecord.table = tableOutData;
+
+        openMenuHyperlinks();
 
         setEffects();
 
         menuPane.setTranslateX(-278);
-
-        switchTables(actorsHyperlink, "actors");
 
         actionsPane.setOnMousePressed(event -> {
             offsetX[0] = event.getSceneX() - actionsPane.getLayoutX();
@@ -181,14 +190,72 @@ public class MainController {
         Search search = new Search();
         searchTextField.textProperty().addListener(text -> {
             try {
-                if (searchTextField.getText().isEmpty())
-                    setColumns(getData(currentTable));
-                else
-                    setColumns(search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText()));
+                if (searchTextField.getText().isEmpty()) setColumns(getData(currentTable));
+                else {
+                    ResultSet rs = search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText());
+                    if (rs != null) setColumns(rs);
+                }
             } catch (SQLException e) {
                 throw new IllegalArgumentException(e);
             }
         });
+    }
+
+    private void setSettingsForHyperlinks(List<Hyperlink> hyperlinks) {
+        int counter = 0;
+        for (Hyperlink hp : hyperlinks) {
+            hp.getStyleClass().add("menuText");
+            String name = tableNames.get(counter);
+            hp.setOnAction(event -> {
+                try {
+                    switchTables(hp, name);
+                    switchAvailableFilters(!hp.getText().equals("Роли"));
+                    setDisableSearchField();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            counter++;
+        }
+    }
+
+    private void openMenuHyperlinks() throws SQLException {
+        List<Hyperlink> current = new ArrayList<>();
+        switch (MainRecord.user) {
+            case "administrator" -> {
+                menuVBox.getChildren().addAll(menuHyperlinks);
+                switchTables(menuHyperlinks.getFirst(), "actors");
+            }
+            case "hr" -> {
+                for (Hyperlink hp : menuHyperlinks) {
+                    if (hp.getText().equals("Актеры") || hp.getText().equals("Работники") || hp.getText().equals("Музыканты"))
+                        current.add(hp);
+                }
+                menuVBox.getChildren().addAll(current);
+                switchTables(current.getFirst(), "actors");
+            }
+            case "accountant" -> {
+                for (Hyperlink hp : menuHyperlinks) {
+                    if (hp.getText().equals("Билеты")) {
+                        menuVBox.getChildren().add(hp);
+                        System.out.println("+");
+                    }
+                }
+                switchTables(menuHyperlinks.get(6), "tickets");
+            }
+            case "producer" -> {
+                for (Hyperlink hp : menuHyperlinks)
+                    if (hp.getText().equals("Спектакли") || hp.getText().equals("Репертуары")) current.add(hp);
+                menuVBox.getChildren().addAll(current);
+                switchTables(current.getFirst(), "actors");
+            }
+            default -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("PERMISSION DENIED!");
+                alert.setOnCloseRequest(event -> System.exit(0));
+                alert.show();
+            }
+        }
     }
 
     protected void setColumns(ResultSet resultSet) throws SQLException {
@@ -296,7 +363,6 @@ public class MainController {
     }
 
     private void switchTables(Hyperlink hyperlink, String table) throws SQLException {
-
         // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
         if (currentHyperlink != null) {
             currentHyperlink.setStyle("-fx-opacity: 0.35;");
@@ -310,62 +376,6 @@ public class MainController {
         currentTable = table;
 
         setSearchParameters(table);
-    }
-
-    @FXML
-    private void getActorsTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(actorsHyperlink, "actors");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getEmployeesTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(employeesHyperlink, "employees");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getMusiciansTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(musiciansHyperlink, "musicians");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getPerformancesTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(performancesHyperlink, "performances");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getRepertoiresTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(repertoireHyperlink, "repertoires");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getRolesTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(roleHyperlink, "roles");
-        switchAvailableFilters(false);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getTicketsTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(ticketsHyperlink, "tickets");
-        switchAvailableFilters(true);
-        setDisableSearchField();
-    }
-
-    @FXML
-    private void getToursTable(ActionEvent actionEvent) throws SQLException {
-        switchTables(toursHyperlink, "tours");
-        switchAvailableFilters(true);
-        setDisableSearchField();
     }
 
     private void setDisableSearchField() {
@@ -654,5 +664,10 @@ public class MainController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void clearFilters(ActionEvent actionEvent) throws SQLException {
+        setColumns(getData(currentTable));
     }
 }

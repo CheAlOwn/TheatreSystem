@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +48,10 @@ public class TicketsFilterController extends MainController {
     }
 
     private void applyFiltersSafely() {
-        try {
-            applyFilters();
-        } catch (SQLException e) {
-            log.info(e.getMessage());
-        }
+        applyFilters();
     }
 
-    private void applyFilters() throws SQLException {
+    private void applyFilters() {
         List<String> conditions = new ArrayList<>();
         List<String> statusConditions = new ArrayList<>();
 
@@ -73,14 +70,19 @@ public class TicketsFilterController extends MainController {
         addCondition(conditions, "sale_date >= ", startDate.getText().trim(), true);
         addCondition(conditions, "sale_date <= ", endDate.getText().trim(), true);
 
-        // Если нет условий, выводим все записи
-        if (conditions.isEmpty()) {
-            setColumns(ticketDAO.findAll());
-        } else {
-            query = BASE_QUERY + String.join(" AND ", conditions);
-            setColumns(getDataByQuery(query));
+        try {
+            // Если нет условий, выводим все записи
+            if (conditions.isEmpty()) {
+                setColumns(ticketDAO.findAll());
+            } else {
+                query = BASE_QUERY + String.join(" AND ", conditions);
+                ResultSet rs = getDataByQuery(query);
+                if (rs != null) setColumns(rs);
+            }
+            System.out.println(query);
+        } catch (SQLException e) {
+            log.info("Данные написаны не полностью или ошибка в запросе");
         }
-        System.out.println(query); // Для отладки
     }
 
     private void addStatusCondition(List<String> statusConditions, String condition, boolean isSelected) {

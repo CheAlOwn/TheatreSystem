@@ -136,16 +136,16 @@
         <Label text="Меню" styleClass="header2" layoutY="26" layoutX="105"/>
 
         <VBox fx:id="menuVBox" layoutY="84" layoutX="20" spacing="14">
-            <Hyperlink text="Актеры" styleClass="menuText" fx:id="actorsHyperlink" onAction="#getActorsTable"/>
-            <Hyperlink text="Работники" styleClass="menuText" fx:id="employeesHyperlink" onAction="#getEmployeesTable"/>
-            <Hyperlink text="Музыканты" styleClass="menuText" fx:id="musiciansHyperlink" onAction="#getMusiciansTable"/>
-            <Hyperlink text="Спектакли" styleClass="menuText" fx:id="performancesHyperlink"
-                       onAction="#getPerformancesTable"/>
-            <Hyperlink text="Репертуары" styleClass="menuText" fx:id="repertoireHyperlink"
-                       onAction="#getRepertoiresTable"/>
-            <Hyperlink text="Роли" styleClass="menuText" fx:id="roleHyperlink" onAction="#getRolesTable"/>
-            <Hyperlink text="Билеты" styleClass="menuText" fx:id="ticketsHyperlink" onAction="#getTicketsTable"/>
-            <Hyperlink text="Гастроли" styleClass="menuText" fx:id="toursHyperlink" onAction="#getToursTable"/>
+<!--            <Hyperlink text="Актеры" styleClass="menuText" fx:id="actorsHyperlink" onAction="#getActorsTable"/>-->
+<!--            <Hyperlink text="Работники" styleClass="menuText" fx:id="employeesHyperlink" onAction="#getEmployeesTable"/>-->
+<!--            <Hyperlink text="Музыканты" styleClass="menuText" fx:id="musiciansHyperlink" onAction="#getMusiciansTable"/>-->
+<!--            <Hyperlink text="Спектакли" styleClass="menuText" fx:id="performancesHyperlink"-->
+<!--                       onAction="#getPerformancesTable"/>-->
+<!--            <Hyperlink text="Репертуары" styleClass="menuText" fx:id="repertoireHyperlink"-->
+<!--                       onAction="#getRepertoiresTable"/>-->
+<!--            <Hyperlink text="Роли" styleClass="menuText" fx:id="roleHyperlink" onAction="#getRolesTable"/>-->
+<!--            <Hyperlink text="Билеты" styleClass="menuText" fx:id="ticketsHyperlink" onAction="#getTicketsTable"/>-->
+<!--            <Hyperlink text="Гастроли" styleClass="menuText" fx:id="toursHyperlink" onAction="#getToursTable"/>-->
         </VBox>
     </AnchorPane>
 
@@ -169,7 +169,7 @@
 
             <Label text="Фильтры" styleClass="header2" layoutY="24" layoutX="115"/>
 
-            <Button fx:id="clearFiltersButton" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
+            <Button fx:id="clearFiltersButton" onAction="#clearFilters" minWidth="40" minHeight="40" prefWidth="40" prefHeight="40"
                     maxHeight="40"
                     maxWidth="40" layoutX="12" layoutY="20" id="clearFiltersButton" styleClass="navButtons">
                 <graphic>

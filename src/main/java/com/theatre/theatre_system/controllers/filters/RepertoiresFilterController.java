@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,11 @@ public class RepertoiresFilterController extends MainController {
                 setColumns(repertoireDAO.findAll());
             } else {
                 query = BASE_QUERY + String.join(" AND ", conditions);
-                setColumns(getDataByQuery(query));
+                ResultSet rs = getDataByQuery(query);
+                if (rs != null) setColumns(getDataByQuery(query));
             }
         } catch (SQLException e) {
-            log.info(e.getMessage());
+            log.info("Данные написаны не полностью или ошибка в запросе");
         }
     }
 

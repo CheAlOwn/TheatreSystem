@@ -7,6 +7,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.PopupWindow;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public record MainRecord() {
@@ -14,4 +15,5 @@ public record MainRecord() {
     public static Connection connection;
     public static AnchorPane form;
     public static FXMLLoader nodeLoader;
+    public static String user;
 }

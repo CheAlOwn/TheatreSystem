@@ -7,31 +7,44 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class Search {
     Connection connection = MainRecord.connection;
     static final String SELECT = "SELECT * FROM ";
+    Logger log = Logger.getLogger(getClass().getName());
 
-    public ResultSet searchByParameter(String table, String parameter, String value) throws SQLException {
-        String query;
+    public ResultSet searchByParameter(String table, String parameter, String value) {
+        String query = "";
+        ResultSet rs = null;
 
-        if (!value.isBlank()) {
-            String type = type(table, parameter);
+        try {
+            if (!value.isBlank()) {
+                String type = type(table, parameter);
 
-            switch (type) {
-                case "serial", "numeric", "int4", "bool" ->
-                        query = SELECT + table + " WHERE " + parameter + " = " + value + ";";
-                case "varchar", "bpchar", "text" ->
-                        query = SELECT + table + " WHERE " + parameter + " LIKE '%" + value + "%';";
-                case "date", "timestamp", "timestamp without time zone", "time", "time without time zone" ->
-                        query = SELECT + table + " WHERE " + parameter + " = '" + value + "';";
-                default -> query = null;
+                switch (type) {
+                    case "serial", "numeric", "int4", "bool" ->
+                            query = SELECT + table + " WHERE " + parameter + " = " + value + ";";
+                    case "varchar", "bpchar", "text" ->
+                            query = SELECT + table + " WHERE " + parameter + " LIKE '%" + value + "%';";
+                    case "date", "timestamp", "timestamp without time zone", "time", "time without time zone" ->
+                            query = SELECT + table + " WHERE " + parameter + " = '" + value + "';";
+                    default -> query = null;
+                }
+            } else {
+                query = SELECT + table;
             }
-        } else {
-            query = SELECT + table;
+        } catch (SQLException e) {
+            log.info(e.getMessage());
         }
 
-        return connection.createStatement().executeQuery(query);
+        try {
+            rs = connection.createStatement().executeQuery(query);
+        } catch (SQLException e) {
+            log.info("Данные написаны не полностью или ошибка в запросе");
+        }
+
+        return rs;
     }
 
     private String type(String table, String column) throws SQLException {
@@ -49,14 +62,3 @@ public class Search {
         return null;
     }
 }
-
-
-//    • Сделать отображение форм предактирование и добавления новых данных (также добавить кнопку назад на некоторые формы) 99/100
-//    • Сделать фильтры (также сделать очистку) 99/100
-//    • Сделать дизайн комбобокса
-//      сделать scrollbar в scrollarea, чтобы пользователи понимали, что есть возможность прокрутки в некоторых местах
-//
-//
-//Не работет на параметре “Параметр” и на birthday, н авкладке hire-year когда стираешь полностью строку. В общем е работает поиск по датам и времени
-//
-//не обрабатывается исключение при попытке ввести запятую вместо точки в росте и т.д.

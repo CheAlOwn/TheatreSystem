@@ -1,5 +1,8 @@
 package com.theatre.theatre_system.database;
 
+import com.theatre.theatre_system.MainRecord;
+import javafx.scene.control.Alert;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,17 +22,17 @@ public class DBConnector {
     public Connection connect(String usr, String pwd) {
         Connection connection;
         try {
-            if (usr.equals(getUser()) && pwd.equals(getPassword())) {
-                Class.forName(getDriver());
-                connection = DriverManager.getConnection(getURL(), usr, pwd);
+            Class.forName(getDriver());
+            connection = DriverManager.getConnection(getURL(), usr, pwd);
+            log.info("Connection established successfully");
+            MainRecord.user = connection.getMetaData().getUserName();
 
-                log.info("Connection established successfully");
-            } else {
-                log.info("Invalid");
-                connection = null;
-            }
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Invalid, please try again!");
+            alert.show();
+            log.info("Invalid");
+            connection = null;
         }
 
         return connection;

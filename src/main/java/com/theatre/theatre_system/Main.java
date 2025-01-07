@@ -14,8 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         setPrimaryStage(stage);
-        MainRecord.connection = new DBConnector().connect("administrator", "avokado");
-        switchScenes(stage, "FXML/main-view.fxml", "Авторизация");
+        switchScenes(stage, "FXML/forms/authorization-view.fxml", "Авторизация");
     }
 
     public static void main(String[] args) {
@@ -39,5 +38,3 @@ public class Main extends Application {
         Main.primaryStage = primaryStage;
     }
 }
-
-// сделать заливку активной кнопки из панельки действия над таблицей

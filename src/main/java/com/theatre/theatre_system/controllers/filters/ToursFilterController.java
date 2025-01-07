@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +38,10 @@ public class ToursFilterController extends MainController {
     }
 
     private void applyFiltersSafely() {
-        try {
-            applyFilters();
-        } catch (SQLException e) {
-            log.info(e.getMessage());
-        }
+        applyFilters();
     }
 
-    private void applyFilters() throws SQLException {
+    private void applyFilters()  {
         List<String> conditions = new ArrayList<>();
 
         addCondition(conditions, "start_date >= ", startDateFrom.getText().trim(), true);
@@ -52,14 +49,18 @@ public class ToursFilterController extends MainController {
         addCondition(conditions, "end_date >= ", endDateFrom.getText().trim(), true);
         addCondition(conditions, "end_date <= ", endDateTo.getText().trim(), true);
 
+        try {
         if (conditions.isEmpty()) {
             // Применяем фильтры без условий, например, показываем все записи
             setColumns(tourDAO.findAll());
         } else {
             query = BASE_QUERY + String.join(" AND ", conditions);
-            setColumns(getDataByQuery(query));
+            ResultSet rs = getDataByQuery(query);
+            if (rs != null) setColumns(rs);
         }
-        System.out.println(query); // Для отладки
+        System.out.println(query); }catch (SQLException e) {
+            log.info("Данные написаны не полностью или ошибка в запросе");
+        }
     }
 
     private void addCondition(List<String> conditions, String conditionPrefix, String value, boolean isString) {
