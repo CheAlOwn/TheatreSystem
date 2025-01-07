@@ -1,6 +1,6 @@
 package com.theatre.theatre_system.controllers;
 
-import com.theatre.theatre_system.Main;
+import com.sun.tools.javac.Main;
 import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.controllers.forms.*;
 import com.theatre.theatre_system.database.dao.*;
@@ -62,30 +62,6 @@ public class MainController {
 
     @FXML
     private Label tableName;
-
-    @FXML
-    private Hyperlink toursHyperlink;
-
-    @FXML
-    private Hyperlink ticketsHyperlink;
-
-    @FXML
-    private Hyperlink roleHyperlink;
-
-    @FXML
-    private Hyperlink repertoireHyperlink;
-
-    @FXML
-    private Hyperlink performancesHyperlink;
-
-    @FXML
-    private Hyperlink musiciansHyperlink;
-
-    @FXML
-    private Hyperlink employeesHyperlink;
-
-    @FXML
-    private Hyperlink actorsHyperlink;
 
     @FXML
     private Button menuButton;
@@ -245,7 +221,7 @@ public class MainController {
             }
             case "producer" -> {
                 for (Hyperlink hp : menuHyperlinks)
-                    if (hp.getText().equals("Спектакли") || hp.getText().equals("Репертуары")) current.add(hp);
+                    if (hp.getText().equals("Спектакли") || hp.getText().equals("Репертуары") || hp.getText().equals("Роли") || hp.getText().equals("Актеры") || hp.getText().equals("Музыканты") || hp.getText().equals("Работники")) current.add(hp);
                 menuVBox.getChildren().addAll(current);
                 switchTables(current.getFirst(), "actors");
             }
@@ -363,6 +339,8 @@ public class MainController {
     }
 
     private void switchTables(Hyperlink hyperlink, String table) throws SQLException {
+        actionsPane.setDisable(false);
+
         // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
         if (currentHyperlink != null) {
             currentHyperlink.setStyle("-fx-opacity: 0.35;");
@@ -376,6 +354,10 @@ public class MainController {
         currentTable = table;
 
         setSearchParameters(table);
+
+        if (currentHyperlink.getText().equals("Работники") && MainRecord.user.equals("producer")) {
+            actionsPane.setDisable(true);
+        }
     }
 
     private void setDisableSearchField() {
