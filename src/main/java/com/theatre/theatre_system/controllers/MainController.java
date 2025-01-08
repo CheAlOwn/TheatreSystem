@@ -1,6 +1,6 @@
 package com.theatre.theatre_system.controllers;
 
-import com.sun.tools.javac.Main;
+import com.theatre.theatre_system.Main;
 import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.controllers.forms.*;
 import com.theatre.theatre_system.database.dao.*;
@@ -23,6 +23,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class MainController {
+    public Button exitButton;
     @FXML
     private HBox importantMessage;
 
@@ -651,5 +653,12 @@ public class MainController {
     @FXML
     private void clearFilters(ActionEvent actionEvent) throws SQLException {
         setColumns(getData(currentTable));
+    }
+
+    @FXML
+    private void exitAction(ActionEvent actionEvent) throws IOException {
+        Main.getPrimaryStage().close();
+        Main.setPrimaryStage(new Stage());
+        Main.switchScenes(Main.getPrimaryStage(), "FXML/forms/authorization-view.fxml", "Авторизация");
     }
 }

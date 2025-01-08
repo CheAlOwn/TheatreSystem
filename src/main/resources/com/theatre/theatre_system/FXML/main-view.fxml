@@ -147,6 +147,15 @@
 <!--            <Hyperlink text="Билеты" styleClass="menuText" fx:id="ticketsHyperlink" onAction="#getTicketsTable"/>-->
 <!--            <Hyperlink text="Гастроли" styleClass="menuText" fx:id="toursHyperlink" onAction="#getToursTable"/>-->
         </VBox>
+        <Button fx:id="exitButton" onAction="#exitAction" minWidth="40" minHeight="40" prefWidth="40"
+                prefHeight="40" maxHeight="40"
+                maxWidth="40" layoutX="218" layoutY="640" id="closeMenuButton" styleClass="navButtons">
+            <graphic>
+                <ImageView>
+                    <Image url="@../icons/log-out.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
     </AnchorPane>
 
 
