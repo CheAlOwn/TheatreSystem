@@ -65,9 +65,9 @@ public class TableViewTools {
 
             tableView.getColumns().add(column);
 
-//            if (column.getText().contains("_id") || column.getText().trim().equals("id")) {
-//                column.setVisible(false);
-//            }
+            if (column.getText().contains("_id") || column.getText().trim().equals("id")) {
+                column.setVisible(false);
+            }
 
             column.setStyle("-fx-background-radius: 12px 0px 0px 12px; -fx-border-width:0px;");
         }
