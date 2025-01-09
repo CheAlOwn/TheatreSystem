@@ -119,7 +119,6 @@ public class MainController {
     private List<String> queries = new ArrayList<>();
     private Hyperlink currentHyperlink;
     private String currentTable;
-    private boolean isAllowed = true;
 
     final double[] offsetX = {0}, offsetY = {0};
 
@@ -134,11 +133,10 @@ public class MainController {
         tableNames.addAll(List.of("actors", "employees", "musicians", "performances", "repertoires", "roles", "tickets", "tours"));
         queries.addAll(List.of(Queries.ACTOR_QUERY, Queries.EMPLOYEE_QUERY, Queries.MUSICIAN_QUERY, Queries.PERFORMANCE_QUERY, Queries.REPERTOIRE_QUERY, Queries.ROLE_QUERY, Queries.TICKET_QUERY, Queries.TOUR_QUERY));
 
-        setSettingsForHyperlinks(menuHyperlinks);
-
         MainRecord.form = form;
         MainRecord.table = tableOutData;
 
+        setSettingsForHyperlinks(menuHyperlinks);
         openMenuHyperlinks();
 
         setEffects();
@@ -310,15 +308,14 @@ public class MainController {
     private void switchTables(Hyperlink hyperlink, String table, String query) throws SQLException {
         actionsPane.setDisable(false);
 
-        // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
         if (currentHyperlink != null) {
             currentHyperlink.setStyle("-fx-opacity: 0.35;");
             currentHyperlink.setDisable(false);
         }
-        currentHyperlink = hyperlink; // Изменяем текущую гиперссылку на новую
-        currentHyperlink.setStyle("-fx-opacity: 1.0;"); // делаем ее активной
-        currentHyperlink.setDisable(true); // выключаем ее
-        tableName.setText(currentHyperlink.getText()); // устанавливаем правильное название таблицы на главной странице
+        currentHyperlink = hyperlink;
+        currentHyperlink.setStyle("-fx-opacity: 1.0;");
+        currentHyperlink.setDisable(true);
+        tableName.setText(currentHyperlink.getText());
         currentTable = table;
         TableViewTools.fillTableView(MainRecord.table, query, currentTable);
 
