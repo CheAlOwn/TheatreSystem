@@ -16,7 +16,7 @@
 
             <FlowPane maxHeight="36" minHeight="36" prefHeight="36" orientation="VERTICAL" hgap="13"
                       alignment="CENTER_LEFT">
-                <Label text="ID репертуара" styleClass="textForms" id="specialText"/>
+                <Label text="ID спектакля" styleClass="textForms" id="specialText"/>
                 <Pane styleClass="filterTextFieldPane" minWidth="56" prefWidth="56" maxWidth="56">
                     <TextField fx:id="idPerformance" promptText="10000" styleClass="filterTextField" minWidth="52"
                                prefWidth="52"
