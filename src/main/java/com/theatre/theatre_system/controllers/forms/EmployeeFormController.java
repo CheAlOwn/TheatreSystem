@@ -1,7 +1,9 @@
 package com.theatre.theatre_system.controllers.forms;
 
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.ActorDAO;
 import com.theatre.theatre_system.database.dao.EmployeeDAO;
 import com.theatre.theatre_system.database.dao.MusicianDAO;
@@ -20,8 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 
 public class EmployeeFormController extends MainController {
     @FXML
@@ -183,7 +183,7 @@ public class EmployeeFormController extends MainController {
 
         postEmployee.setEditable(false);
         employeeDAO.insert(new Employee(lastName.getText().trim(), firstName.getText().trim(), middleName.getText().trim(), LocalDate.parse(birthday.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), gender.trim(), Integer.parseInt(hireDate.getText().trim()), typeEmployeeBox.getSelectionModel().getSelectedItem().toString().trim(), postEmployee.getText().trim(), Float.parseFloat(salary.getText().trim()), phoneNumberEmployee.getText().trim(), addressEmployee.getText().trim(), Integer.parseInt(experience.getText().trim()), Integer.parseInt(countKids.getText().trim())));
-        setColumns(employeeDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.EMPLOYEE_QUERY);
 
         ResultSet rs = connection.createStatement().executeQuery("SELECT currval('employees_employee_id_seq')");
         int employeeId = 0;
@@ -239,6 +239,6 @@ public class EmployeeFormController extends MainController {
 
         postEmployee.setEditable(false);
         employeeDAO.update(Integer.parseInt(id), new Employee(lastName.getText().trim(), firstName.getText().trim(), middleName.getText().trim(), LocalDate.parse(birthday.getText().trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd")), gender.trim(), Integer.parseInt(hireDate.getText().trim()), typeEmployeeBox.getSelectionModel().getSelectedItem().toString().trim(), postEmployee.getText().trim(), Float.parseFloat(salary.getText().trim()), phoneNumberEmployee.getText().trim(), addressEmployee.getText().trim(), Integer.parseInt(experience.getText().trim()), Integer.parseInt(countKids.getText().trim())));
-        setColumns(employeeDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.EMPLOYEE_QUERY);
     }
 }

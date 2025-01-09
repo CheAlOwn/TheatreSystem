@@ -2,14 +2,15 @@ package com.theatre.theatre_system.controllers;
 
 import com.theatre.theatre_system.Main;
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.forms.*;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.*;
+import com.theatre.theatre_system.models.Actor;
 import com.theatre.theatre_system.search_system.Search;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +31,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class MainController {
@@ -78,7 +78,7 @@ public class MainController {
     private Rectangle overlayPane;
 
     @FXML
-    private TableView tableOutData;
+    private TableView<ObservableList<Object>> tableOutData;
 
     @FXML
     private Button closeMenuButton;
@@ -116,6 +116,7 @@ public class MainController {
     private final Connection connection = MainRecord.connection;
     private List<Hyperlink> menuHyperlinks = new ArrayList<>();
     private List<String> tableNames = new ArrayList<>();
+    private List<String> queries = new ArrayList<>();
     private Hyperlink currentHyperlink;
     private String currentTable;
     private boolean isAllowed = true;
@@ -131,6 +132,8 @@ public class MainController {
     void initialize() throws SQLException {
         menuHyperlinks.addAll(List.of(new Hyperlink("Актеры"), new Hyperlink("Работники"), new Hyperlink("Музыканты"), new Hyperlink("Спектакли"), new Hyperlink("Репертуары"), new Hyperlink("Роли"), new Hyperlink("Билеты"), new Hyperlink("Гастроли")));
         tableNames.addAll(List.of("actors", "employees", "musicians", "performances", "repertoires", "roles", "tickets", "tours"));
+        queries.addAll(List.of(Queries.ACTOR_QUERY, Queries.EMPLOYEE_QUERY, Queries.MUSICIAN_QUERY, Queries.PERFORMANCE_QUERY, Queries.REPERTOIRE_QUERY, Queries.ROLE_QUERY, Queries.TICKET_QUERY, Queries.TOUR_QUERY));
+
         setSettingsForHyperlinks(menuHyperlinks);
 
         MainRecord.form = form;
@@ -168,10 +171,20 @@ public class MainController {
         Search search = new Search();
         searchTextField.textProperty().addListener(text -> {
             try {
-                if (searchTextField.getText().isEmpty()) setColumns(getData(currentTable));
-                else {
-                    ResultSet rs = search.searchByParameter(currentTable, (String) parametersBox.getSelectionModel().getSelectedItem(), searchTextField.getText());
-                    if (rs != null) setColumns(rs);
+                if (searchTextField.getText().isEmpty()) {
+                    switch (currentTable) {
+                        case "actors" -> TableViewTools.fillTableView(tableOutData, Queries.ACTOR_QUERY);
+                        case "employees" -> TableViewTools.fillTableView(tableOutData, Queries.EMPLOYEE_QUERY);
+                        case "musicians" -> TableViewTools.fillTableView(tableOutData, Queries.MUSICIAN_QUERY);
+                        case "performances" -> TableViewTools.fillTableView(tableOutData, Queries.PERFORMANCE_QUERY);
+                        case "repertoires" -> TableViewTools.fillTableView(tableOutData, Queries.REPERTOIRE_QUERY);
+                        case "tickets" -> TableViewTools.fillTableView(tableOutData, Queries.TICKET_QUERY);
+                        case "roles" -> TableViewTools.fillTableView(tableOutData, Queries.ROLE_QUERY);
+                        case "tours" -> TableViewTools.fillTableView(tableOutData, Queries.TOUR_QUERY);
+                    }
+                } else {
+                    ResultSet rs = search.searchByParameter(currentTable, parametersBox.getSelectionModel().getSelectedItem().toString(), searchTextField.getText());
+                    if (rs != null) TableViewTools.fillTableView(tableOutData, rs);
                 }
             } catch (SQLException e) {
                 throw new IllegalArgumentException(e);
@@ -184,9 +197,10 @@ public class MainController {
         for (Hyperlink hp : hyperlinks) {
             hp.getStyleClass().add("menuText");
             String name = tableNames.get(counter);
+            String query = queries.get(counter);
             hp.setOnAction(event -> {
                 try {
-                    switchTables(hp, name);
+                    switchTables(hp, name, query);
                     switchAvailableFilters(!hp.getText().equals("Роли"));
                     setDisableSearchField();
                 } catch (SQLException e) {
@@ -202,7 +216,7 @@ public class MainController {
         switch (MainRecord.user) {
             case "administrator" -> {
                 menuVBox.getChildren().addAll(menuHyperlinks);
-                switchTables(menuHyperlinks.getFirst(), "actors");
+                switchTables(menuHyperlinks.getFirst(), "actors", Queries.ACTOR_QUERY);
             }
             case "hr" -> {
                 for (Hyperlink hp : menuHyperlinks) {
@@ -210,22 +224,22 @@ public class MainController {
                         current.add(hp);
                 }
                 menuVBox.getChildren().addAll(current);
-                switchTables(current.getFirst(), "actors");
+                switchTables(current.getFirst(), "actors", Queries.ACTOR_QUERY);
             }
             case "accountant" -> {
                 for (Hyperlink hp : menuHyperlinks) {
                     if (hp.getText().equals("Билеты")) {
                         menuVBox.getChildren().add(hp);
-                        System.out.println("+");
                     }
                 }
-                switchTables(menuHyperlinks.get(6), "tickets");
+                switchTables(menuHyperlinks.get(6), "tickets", Queries.TICKET_QUERY);
             }
             case "producer" -> {
                 for (Hyperlink hp : menuHyperlinks)
-                    if (hp.getText().equals("Спектакли") || hp.getText().equals("Репертуары") || hp.getText().equals("Роли") || hp.getText().equals("Актеры") || hp.getText().equals("Музыканты") || hp.getText().equals("Работники")) current.add(hp);
+                    if (hp.getText().equals("Спектакли") || hp.getText().equals("Репертуары") || hp.getText().equals("Роли") || hp.getText().equals("Актеры") || hp.getText().equals("Музыканты") || hp.getText().equals("Работники"))
+                        current.add(hp);
                 menuVBox.getChildren().addAll(current);
-                switchTables(current.getFirst(), "actors");
+                switchTables(current.getFirst(), "actors", Queries.ACTOR_QUERY);
             }
             default -> {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -234,54 +248,7 @@ public class MainController {
                 alert.show();
             }
         }
-    }
 
-    protected void setColumns(ResultSet resultSet) throws SQLException {
-        MainRecord.table.getColumns().clear();
-        ObservableList<ObservableList<Object>> rows = FXCollections.observableArrayList(); // Хранилище строк. Такой подход используется потому что мы не знаем заранее из какой таблицы будут вытягиваться данные
-        ResultSetMetaData rsMetaData = resultSet.getMetaData();
-        int columnCount = rsMetaData.getColumnCount();
-
-        for (int i = 1; i <= columnCount; i++) {
-            final int columnIndex = i - 1; // задаем индекс колонки
-            String columnName = rsMetaData.getColumnLabel(i);
-
-            TableColumn<ObservableList<Object>, Object> column = getObservableListObjectTableColumn(columnName, columnIndex, i);
-
-            MainRecord.table.getColumns().add(column);
-        }
-
-        while (resultSet.next()) {
-            ObservableList<Object> row = FXCollections.observableArrayList();
-            for (int i = 1; i <= columnCount; i++) {
-                row.add(resultSet.getObject(i));
-            }
-            rows.add(row);
-        }
-
-        MainRecord.table.setItems(rows);
-    }
-
-    private TableColumn<ObservableList<Object>, Object> getObservableListObjectTableColumn(String columnName, int columnIndex, int i) {
-        TableColumn<ObservableList<Object>, Object> column = new TableColumn<>(columnName);
-        column.setCellValueFactory(param -> {
-            if (param.getValue().size() > columnIndex) {
-                return new SimpleObjectProperty<>(param.getValue().get(columnIndex));
-            } else {
-                return null;
-            }
-        });
-
-        if (i == 1) column.setStyle("-fx-background-radius: 12px 0px 0px 12px; -fx-border-radius: 12px 0px 0px 12px;");
-        return column;
-    }
-
-    private ResultSet getData(String table) throws SQLException {
-        return connection.createStatement().executeQuery("SELECT * FROM " + table + ";");
-    }
-
-    public ResultSet getDataByQuery(String query) throws SQLException {
-        return connection.createStatement().executeQuery(query);
     }
 
     private void setEffects() {
@@ -340,7 +307,7 @@ public class MainController {
         setOpen(menuPane, -278);
     }
 
-    private void switchTables(Hyperlink hyperlink, String table) throws SQLException {
+    private void switchTables(Hyperlink hyperlink, String table, String query) throws SQLException {
         actionsPane.setDisable(false);
 
         // Если текущая гиперссылка не нулевая, то приглушаем ее цвет и включаем
@@ -352,10 +319,10 @@ public class MainController {
         currentHyperlink.setStyle("-fx-opacity: 1.0;"); // делаем ее активной
         currentHyperlink.setDisable(true); // выключаем ее
         tableName.setText(currentHyperlink.getText()); // устанавливаем правильное название таблицы на главной странице
-        setColumns(getData(table)); // Заполняем таблицу колонками
         currentTable = table;
+        TableViewTools.fillTableView(MainRecord.table, query, currentTable);
 
-        setSearchParameters(table);
+        setSearchParameters();
 
         if (currentHyperlink.getText().equals("Работники") && MainRecord.user.equals("producer")) {
             actionsPane.setDisable(true);
@@ -464,15 +431,14 @@ public class MainController {
         hideAnimation.play();
     }
 
-    private void setSearchParameters(String table) throws SQLException {
+    private void setSearchParameters() throws SQLException {
         parametersBox.getSelectionModel().clearSelection();
         parametersBox.getItems().clear();
 
-        ResultSetMetaData rsMetaData = getData(table).getMetaData();
-        int columnCount = rsMetaData.getColumnCount();
-
-        for (int i = 1; i <= columnCount; i++) {
-            parametersBox.getItems().add(rsMetaData.getColumnLabel(i));
+        for (TableColumn col : tableOutData.getColumns()) {
+            if (col.isVisible()) {
+                parametersBox.getItems().add(col.getText());
+            }
         }
     }
 
@@ -602,40 +568,40 @@ public class MainController {
     @FXML
     private void deleteThisRecord(ActionEvent actionEvent) {
         try {
-            String objectId = MainRecord.table.getSelectionModel().getSelectedItem().toString().replace("[", "").replace("]", "").split(", ")[0];
+            String[] objectId = MainRecord.table.getSelectionModel().getSelectedItem().toString().replace("[", "").replace("]", "").split(", ");
 
             switch (currentHyperlink.getText()) {
                 case "Актеры":
-                    ActorDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("actors"));
+                    ActorDAO.deleteById(Integer.parseInt(objectId[5]));
+                    TableViewTools.fillTableView(tableOutData, Queries.ACTOR_QUERY);
                     break;
                 case "Работники":
-                    EmployeeDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("employees"));
+                    EmployeeDAO.deleteById(Integer.parseInt(objectId[0]));
+                    TableViewTools.fillTableView(tableOutData, Queries.EMPLOYEE_QUERY);
                     break;
                 case "Музыканты":
-                    MusicianDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("musicians"));
+                    MusicianDAO.deleteById(Integer.parseInt(objectId[5]));
+                    TableViewTools.fillTableView(tableOutData, Queries.MUSICIAN_QUERY);
                     break;
                 case "Спектакли":
-                    PerformanceDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("performances"));
+                    PerformanceDAO.deleteById(Integer.parseInt(objectId[0]));
+                    TableViewTools.fillTableView(tableOutData, Queries.PERFORMANCE_QUERY);
                     break;
                 case "Репертуары":
-                    RepertoireDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("repertoires"));
+                    RepertoireDAO.deleteById(Integer.parseInt(objectId[2]));
+                    TableViewTools.fillTableView(tableOutData, Queries.REPERTOIRE_QUERY);
                     break;
                 case "Роли":
-                    RoleDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("roles"));
+                    RoleDAO.deleteById(Integer.parseInt(objectId[0]));
+                    TableViewTools.fillTableView(tableOutData, Queries.ROLE_QUERY);
                     break;
                 case "Билеты":
-                    TicketDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("tickets"));
+                    TicketDAO.deleteById(Integer.parseInt(objectId[0]));
+                    TableViewTools.fillTableView(tableOutData, Queries.TICKET_QUERY);
                     break;
                 case "Гастроли":
-                    TourDAO.deleteById(Integer.parseInt(objectId));
-                    setColumns(getData("tours"));
+                    TourDAO.deleteById(Integer.parseInt(objectId[6]));
+                    TableViewTools.fillTableView(tableOutData, Queries.TOUR_QUERY);
                     break;
                 default:
                     break;
@@ -648,11 +614,41 @@ public class MainController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+//
     }
 
     @FXML
     private void clearFilters(ActionEvent actionEvent) throws SQLException {
-        setColumns(getData(currentTable));
+        String query = "";
+        switch (currentHyperlink.getText()) {
+            case "Актеры":
+                query = Queries.ACTOR_QUERY;
+                break;
+            case "Работники":
+                query = Queries.EMPLOYEE_QUERY;
+                break;
+            case "Музыканты":
+                query = Queries.MUSICIAN_QUERY;
+                break;
+            case "Спектакли":
+                query = Queries.PERFORMANCE_QUERY;
+                break;
+            case "Репертуары":
+                query = Queries.REPERTOIRE_QUERY;
+                break;
+            case "Роли":
+                query = Queries.ROLE_QUERY;
+                break;
+            case "Билеты":
+                query = Queries.TICKET_QUERY;
+                break;
+            case "Гастроли":
+                query = Queries.TOUR_QUERY;
+                break;
+            default:
+                break;
+        }
+        TableViewTools.fillTableView(tableOutData, query);
     }
 
     @FXML

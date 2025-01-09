@@ -3,17 +3,29 @@ package com.theatre.theatre_system.database.dao;
 import com.theatre.theatre_system.MainRecord;
 import com.theatre.theatre_system.models.Actor;
 import com.theatre.theatre_system.repositories.derivative.ActorRepository;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 
 public class ActorDAO implements ActorRepository {
+    public static final ObservableList<Actor> ACTORS = FXCollections.observableArrayList();
     Connection connection = MainRecord.connection;
     PreparedStatement preparedStatement;
-    ResultSet rs;
     String query;
 
     public static void deleteById(int id) throws SQLException {
-        MainRecord.connection.createStatement().executeUpdate("DELETE FROM actors WHERE actor_id = " + id);
+        try {
+            MainRecord.connection.createStatement().executeUpdate("DELETE FROM actors WHERE actor_id = " + id);
+        } catch (SQLException e) {
+            if (e.getMessage().contains("нарушает ограничение внешнего ключа")){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText(e.getMessage());
+                alert.show();
+            }
+        }
     }
 
     @Override

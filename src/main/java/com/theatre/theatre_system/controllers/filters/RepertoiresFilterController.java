@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.RepertoireDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -12,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.theatre.theatre_system.TableViewTools.fillTableView;
+import static com.theatre.theatre_system.TableViewTools.getDataByQuery;
 
 public class RepertoiresFilterController extends MainController {
     @FXML
@@ -32,7 +38,7 @@ public class RepertoiresFilterController extends MainController {
     Logger log = Logger.getLogger(getClass().getName());
 
     private RepertoireDAO repertoireDAO = new RepertoireDAO();
-    private static final String BASE_QUERY = "SELECT * FROM repertoires WHERE ";
+    private static final String BASE_QUERY = Queries.REPERTOIRE_QUERY + " WHERE ";
     private String query = "";
 
     @FXML
@@ -52,11 +58,11 @@ public class RepertoiresFilterController extends MainController {
             buildDateCondition(conditions);
             buildPriceCondition(conditions);
             if (conditions.isEmpty()) {
-                setColumns(repertoireDAO.findAll());
+                TableViewTools.fillTableView(MainRecord.table, Queries.REPERTOIRE_QUERY);
             } else {
                 query = BASE_QUERY + String.join(" AND ", conditions);
                 ResultSet rs = getDataByQuery(query);
-                if (rs != null) setColumns(getDataByQuery(query));
+                if (rs != null) fillTableView(MainRecord.table, query);
             }
         } catch (SQLException e) {
             log.info("Данные написаны не полностью или ошибка в запросе");

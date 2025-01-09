@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.PerformanceDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -22,7 +25,7 @@ public class PerformancesFilterController extends MainController {
     Logger log = Logger.getLogger(getClass().getName());
     private final PerformanceDAO performanceDAO = new PerformanceDAO();
     private final List<CheckBox> genres = new ArrayList<>();
-    private static final String WARP = "SELECT * FROM performances WHERE ";
+    private static final String WARP = Queries.PERFORMANCE_QUERY + " WHERE ";
     private String query = "";
 
     @FXML
@@ -40,6 +43,7 @@ public class PerformancesFilterController extends MainController {
         try {
             applyFilters();
         } catch (SQLException e) {
+            System.out.println(query);
             log.info(e.getMessage());
         }
     }
@@ -47,11 +51,11 @@ public class PerformancesFilterController extends MainController {
     private void applyFilters() throws SQLException {
         query = buildGenreQuery();
         if (query.isEmpty()) {
-            setColumns(performanceDAO.findAll());
+            TableViewTools.fillTableView(MainRecord.table, Queries.PERFORMANCE_QUERY);
         } else {
-            setColumns(getDataByQuery(query));
+            TableViewTools.fillTableView(MainRecord.table, query);
         }
-        System.out.println(query); // Для отладки: вывод текущего запроса
+        System.out.println(query);
     }
 
     private String buildGenreQuery() {

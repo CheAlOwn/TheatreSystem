@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.TicketDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -12,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.theatre.theatre_system.TableViewTools.fillTableView;
+import static com.theatre.theatre_system.TableViewTools.getDataByQuery;
 
 public class TicketsFilterController extends MainController {
     @FXML
@@ -26,7 +32,7 @@ public class TicketsFilterController extends MainController {
     Logger log = Logger.getLogger(getClass().getName());
 
     private final TicketDAO ticketDAO = new TicketDAO();
-    private static final String BASE_QUERY = "SELECT * FROM tickets WHERE ";
+    private static final String BASE_QUERY = Queries.TICKET_QUERY + " WHERE ";
     private String query = "";
 
     @FXML
@@ -73,11 +79,11 @@ public class TicketsFilterController extends MainController {
         try {
             // Если нет условий, выводим все записи
             if (conditions.isEmpty()) {
-                setColumns(ticketDAO.findAll());
+                TableViewTools.fillTableView(MainRecord.table, Queries.TICKET_QUERY);
             } else {
                 query = BASE_QUERY + String.join(" AND ", conditions);
                 ResultSet rs = getDataByQuery(query);
-                if (rs != null) setColumns(rs);
+                if (rs != null) fillTableView(MainRecord.table, query);
             }
             System.out.println(query);
         } catch (SQLException e) {

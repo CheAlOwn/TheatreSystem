@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.MusicianDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -28,7 +31,7 @@ public class MusiciansFilterController extends MainController {
     private final List<CheckBox> instruments = new ArrayList<>();
     private final List<RadioButton> genders = new ArrayList<>();
     private String query = "";
-    private static final String WARP = "SELECT m.* FROM musicians m JOIN employees e ON m.employee_id = e.employee_id WHERE ";
+    private static final String WARP = Queries.MUSICIAN_QUERY + " WHERE ";
 
     @FXML
     void initialize() {
@@ -66,9 +69,9 @@ public class MusiciansFilterController extends MainController {
     private void applyFilters() throws SQLException {
         query = buildQuery();
         if (query.isEmpty()) {
-            setColumns(musicianDAO.findAll());
+            TableViewTools.fillTableView(MainRecord.table, Queries.MUSICIAN_QUERY);
         } else {
-            setColumns(getDataByQuery(query));
+            TableViewTools.fillTableView(MainRecord.table, query);
         }
         System.out.println(query);
     }

@@ -74,7 +74,7 @@
                 stylesheets="@../../CSS/mainStyle.css" visible="false" fx:id="step2">
 
         <VBox spacing="20" layoutX="30" maxWidth="284" minWidth="284">
-            <ComboBox fx:id="typeEmployeeBox" promptText="Тип работника" minWidth="284" maxWidth="284" maxHeight="36"
+            <ComboBox fx:id="typeEmployeeBox" promptText="Категория работника" minWidth="284" maxWidth="284" maxHeight="36"
                       minHeight="36">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

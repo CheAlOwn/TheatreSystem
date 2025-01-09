@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.ActorDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -38,7 +41,7 @@ public class ActorsFilterController extends MainController {
     private final List<CheckBox> timbres = new ArrayList<>();
     private final List<RadioButton> genders = new ArrayList<>();
     private String query = "";
-    private static final String WARP = "SELECT a.* FROM actors a JOIN employees e ON a.employee_id = e.employee_id WHERE ";
+    private static final String WARP = Queries.ACTOR_QUERY + " WHERE ";
 
     @FXML
     void initialize() {
@@ -79,10 +82,10 @@ public class ActorsFilterController extends MainController {
 
     private void applyFilters() throws SQLException {
         query = buildQuery();
-        if (query.isEmpty()) {
-            setColumns(actorDAO.findAll());
+        if (!query.isEmpty()) {
+            TableViewTools.fillTableView(MainRecord.table, query);
         } else {
-            setColumns(getDataByQuery(query));
+            TableViewTools.fillTableView(MainRecord.table, Queries.ACTOR_QUERY);
         }
         System.out.println(query);
     }

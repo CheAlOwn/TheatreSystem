@@ -1,19 +1,32 @@
 package com.theatre.theatre_system.database.dao;
 
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.models.Employee;
 import com.theatre.theatre_system.models.Tour;
 import com.theatre.theatre_system.repositories.derivative.TourRepository;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 
 public class TourDAO implements TourRepository {
+    public static final ObservableList<Tour> TOURS = FXCollections.observableArrayList();
     Connection connection = MainRecord.connection;
     PreparedStatement preparedStatement;
     ResultSet rs;
     String query;
 
     public static void deleteById(int id) throws SQLException {
-        MainRecord.connection.createStatement().executeUpdate("DELETE FROM tours WHERE id = " + id);
+        try {
+            MainRecord.connection.createStatement().executeUpdate("DELETE FROM tours WHERE id = " + id);
+        } catch (SQLException e) {
+            if (e.getMessage().contains("нарушает ограничение внешнего ключа")){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText(e.getMessage());
+                alert.show();
+            }
+        }
     }
 
     @Override

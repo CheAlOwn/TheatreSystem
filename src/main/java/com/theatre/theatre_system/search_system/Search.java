@@ -1,54 +1,63 @@
 package com.theatre.theatre_system.search_system;
 
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.database.Queries;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Search {
     Connection connection = MainRecord.connection;
-    static final String SELECT = "SELECT * FROM ";
     Logger log = Logger.getLogger(getClass().getName());
 
-    public ResultSet searchByParameter(String table, String parameter, String value) {
-        String query = "";
-        ResultSet rs = null;
+    public ResultSet searchByParameter(String entity, String parameter, String value) {
+        String baseQuery = getBaseQuery(entity);
+        if (baseQuery == null) {
+            log.warning("Неизвестная сущность: " + entity);
+            return null;
+        }
+
+        String query = baseQuery;
 
         try {
-            if (!value.isBlank()) {
-                String type = type(table, parameter);
-
-                switch (type) {
-                    case "serial", "numeric", "int4", "bool" ->
-                            query = SELECT + table + " WHERE " + parameter + " = " + value + ";";
-                    case "varchar", "bpchar", "text" ->
-                            query = SELECT + table + " WHERE " + parameter + " LIKE '%" + value + "%';";
-                    case "date", "timestamp", "timestamp without time zone", "time", "time without time zone" ->
-                            query = SELECT + table + " WHERE " + parameter + " = '" + value + "';";
-                    default -> query = null;
+            if (value != null && !value.isBlank()) {
+                String columnType = type(entity, parameter);
+                if (columnType == null) {
+                    log.warning("Не удалось определить тип колонки: " + parameter);
+                    return null;
                 }
-            } else {
-                query = SELECT + table;
+
+                switch (columnType) {
+                    case "serial", "numeric", "int4", "bool" ->
+                            query += " WHERE " + parameter + " = " + value + ";";
+                    case "varchar", "bpchar", "text" ->
+                            query += " WHERE " + parameter + " LIKE '%" + value + "%';";
+                    case "date", "timestamp", "timestamp without time zone", "time", "time without time zone" ->
+                            query += " WHERE " + parameter + " = '" + value + "';";
+                    default -> {
+                        log.warning("Неизвестный тип данных: " + columnType);
+                        return null;
+                    }
+                }
             }
         } catch (SQLException e) {
-            log.info(e.getMessage());
+            log.warning("Ошибка при обработке параметров: " + e.getMessage());
+            return null;
         }
-
+        System.out.println(query);
         try {
-            rs = connection.createStatement().executeQuery(query);
+
+            return connection.createStatement().executeQuery(query);
         } catch (SQLException e) {
             log.info("Данные написаны не полностью или ошибка в запросе");
+            return null;
         }
-
-        return rs;
     }
 
+
     private String type(String table, String column) throws SQLException {
-        String query = SELECT + table;
+        String query = getBaseQuery(table);
         ResultSet rs = connection.createStatement().executeQuery(query);
         ResultSetMetaData rsmt = rs.getMetaData();
         int columnCount = rsmt.getColumnCount();
@@ -60,5 +69,19 @@ public class Search {
         }
 
         return null;
+    }
+
+    private String getBaseQuery(String entity) {
+        return switch (entity.toLowerCase()) {
+            case "actors" -> Queries.ACTOR_QUERY;
+            case "musicians" -> Queries.MUSICIAN_QUERY;
+            case "tickets" -> Queries.TICKET_QUERY;
+            case "performances" -> Queries.PERFORMANCE_QUERY;
+            case "employees" -> Queries.EMPLOYEE_QUERY;
+            case "repertoires" -> Queries.REPERTOIRE_QUERY;
+            case "roles" -> Queries.ROLE_QUERY;
+            case "tours" -> Queries.TOUR_QUERY;
+            default -> null;
+        };
     }
 }

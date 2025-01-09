@@ -1,23 +1,19 @@
 package com.theatre.theatre_system.controllers.forms;
 
-import com.theatre.theatre_system.Main;
 import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.MusicianDAO;
-import com.theatre.theatre_system.models.Actor;
 import com.theatre.theatre_system.models.Musician;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MusiciansFormController extends MainController {
     @FXML
@@ -43,24 +39,24 @@ public class MusiciansFormController extends MainController {
     @FXML
     private void addNewMusician(ActionEvent actionEvent) throws SQLException {
         musicianDAO.insert(new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(musicianDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.MUSICIAN_QUERY);
     }
 
     public void load(String[] selected) {
         addForRecordHyperlink.setVisible(false);
         editForRecordHyperlink.setVisible(true);
 
-        id = selected[0];
-        employeeIdField.setText(selected[1]);
+        id = selected[5];
+        employeeIdField.setText(selected[6]);
         employeeIdField.setDisable(true);
 
-        instrumentBox.getSelectionModel().select(selected[2]);
+        instrumentBox.getSelectionModel().select(selected[7]);
     }
 
     @FXML
     private void editMusician(ActionEvent actionEvent) throws SQLException {
         musicianDAO.update(Integer.parseInt(id), new Musician(Integer.parseInt(employeeIdField.getText()), instrumentBox.getSelectionModel().getSelectedItem().toString()));
-        setColumns(musicianDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.MUSICIAN_QUERY);
     }
 
     public ComboBox getInstrumentBox() {

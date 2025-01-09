@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.forms;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.PerformanceDAO;
 import com.theatre.theatre_system.models.Performance;
 import javafx.event.ActionEvent;
@@ -61,7 +64,7 @@ public class PerformancesFormController extends MainController {
     @FXML
     private void addNewPerformance(ActionEvent actionEvent) throws SQLException {
         performanceDAO.insert(new Performance(performanceTitle.getText().trim(), performanceGenre.getSelectionModel().getSelectedItem().toString(), performanceAuthor.getText().trim(), Integer.parseInt(performanceDirector.getText()), Integer.parseInt(performanceArtist.getText()), Integer.parseInt(performanceConductor.getText())));
-        setColumns(performanceDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.PERFORMANCE_QUERY);
     }
 
     public void load(String[] selected) {
@@ -80,6 +83,6 @@ public class PerformancesFormController extends MainController {
     @FXML
     private void editPerformance(ActionEvent actionEvent) throws SQLException {
         performanceDAO.update(Integer.parseInt(id), new Performance(performanceTitle.getText().trim(), performanceGenre.getSelectionModel().getSelectedItem().toString(), performanceAuthor.getText().trim(), Integer.parseInt(performanceDirector.getText()), Integer.parseInt(performanceArtist.getText()), Integer.parseInt(performanceConductor.getText())));
-        setColumns(performanceDAO.findAll());
+        TableViewTools.fillTableView(MainRecord.table, Queries.PERFORMANCE_QUERY);
     }
 }

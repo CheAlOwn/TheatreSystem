@@ -1,6 +1,9 @@
 package com.theatre.theatre_system.controllers.filters;
 
+import com.theatre.theatre_system.MainRecord;
+import com.theatre.theatre_system.TableViewTools;
 import com.theatre.theatre_system.controllers.MainController;
+import com.theatre.theatre_system.database.Queries;
 import com.theatre.theatre_system.database.dao.EmployeeDAO;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,7 +39,7 @@ public class EmployeesFilterController extends MainController {
     Logger log = Logger.getLogger(getClass().getName());
 
     private final EmployeeDAO employeeDAO = new EmployeeDAO();
-    private static final String BASE_QUERY = "SELECT * FROM employees WHERE ";
+    private static final String BASE_QUERY = Queries.EMPLOYEE_QUERY + " WHERE ";
     private String query = "";
 
     private final List<FlowPane> categories = new ArrayList<>();
@@ -112,10 +115,10 @@ public class EmployeesFilterController extends MainController {
             addRangeCondition(conditions, startSalary.getText(), endSalary.getText(), "salary");
 
             if (conditions.isEmpty()) {
-                setColumns(employeeDAO.findAll());
+                TableViewTools.fillTableView(MainRecord.table, Queries.EMPLOYEE_QUERY);
             } else {
                 query = BASE_QUERY + String.join(" AND ", conditions);
-                setColumns(getDataByQuery(query));
+                TableViewTools.fillTableView(MainRecord.table, query);
             }
         } catch (SQLException e) {
             log.info(e.getMessage());

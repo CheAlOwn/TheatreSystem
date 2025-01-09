@@ -1,5 +1,6 @@
 package com.theatre.theatre_system;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public record MainRecord() {
-    public static TableView table;
+    public static TableView<ObservableList<Object>> table;
     public static Connection connection;
     public static AnchorPane form;
     public static FXMLLoader nodeLoader;
