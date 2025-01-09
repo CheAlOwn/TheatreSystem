@@ -5,6 +5,7 @@
 ***
 ## Зависимости
 <li>
-* JavaFX 
+JavaFX-21.0.4
+postgresql-42.7.4
 </li>
 
